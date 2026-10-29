@@ -30,10 +30,29 @@ export function initTheme() {
   apply(resolveTheme(readStored(), window.matchMedia('(prefers-color-scheme: dark)').matches))
 }
 
-export function useTheme() {
-  function toggle() {
-    const next: Theme = theme.value === 'dark' ? 'light' : 'dark'
+/** Past het thema toe met een cirkel die vanaf `origin` over het scherm uitwaaiert; zonder ondersteuning of bij verminderde beweging direct. */
+function applyAnimated(next: Theme, origin?: { x: number; y: number }) {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (!origin || reduceMotion || !('startViewTransition' in document)) {
     apply(next)
+    return
+  }
+
+  const { x, y } = origin
+  const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y))
+  const transition = document.startViewTransition(() => apply(next))
+  void transition.ready.then(() => {
+    document.documentElement.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+      { duration: 650, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', pseudoElement: '::view-transition-new(root)' },
+    )
+  })
+}
+
+export function useTheme() {
+  function toggle(origin?: { x: number; y: number }) {
+    const next: Theme = theme.value === 'dark' ? 'light' : 'dark'
+    applyAnimated(next, origin)
     try {
       localStorage.setItem(STORAGE_KEY, next)
     } catch {

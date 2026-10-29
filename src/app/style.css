@@ -106,9 +106,105 @@
   --color-warning-soft: var(--warning-soft);
 }
 
+/* Beweging. Alles hieronder wordt uitgezet bij `prefers-reduced-motion` (onderaan dit bestand). */
+@theme {
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-fade-in: fade-in 0.5s ease both;
+  --animate-pop: pop 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  --animate-slide-in: slide-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-grow-x: grow-x 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both;
+
+  @keyframes grow-x {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.92) translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(-14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+}
+
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-page font-sans text-ink antialiased;
+  }
+
+  /* Achtergrond: een warme gloed in de merkkleur en een fijn puntenraster, vast achter de inhoud. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(60rem 38rem at 88% -12%, color-mix(in srgb, var(--brand) 15%, transparent), transparent 62%),
+      radial-gradient(44rem 30rem at -8% 108%, color-mix(in srgb, var(--brand) 9%, transparent), transparent 60%),
+      radial-gradient(color-mix(in srgb, var(--ink) 10%, transparent) 1px, transparent 1.2px);
+    background-size:
+      auto,
+      auto,
+      24px 24px;
+    mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
   }
 
   /* Locinox gebruikt koppen in hoofdletters. */
@@ -116,8 +212,81 @@
     @apply font-bold uppercase tracking-wide;
   }
 
+  ::selection {
+    background: color-mix(in srgb, var(--brand) 35%, transparent);
+  }
+
   :focus-visible {
     outline: 2px solid var(--brand);
     outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Laadskelet: een zacht glanzende balk in plaats van "Laden…". */
+  .skeleton {
+    background: linear-gradient(
+      100deg,
+      var(--surface-muted) 30%,
+      color-mix(in srgb, var(--surface) 55%, var(--surface-muted)) 50%,
+      var(--surface-muted) 70%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+
+  /* Glanslaag die bij hover over een knop schuift. */
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(110deg, transparent 32%, rgb(255 255 255 / 0.38) 50%, transparent 68%);
+    transform: translateX(-130%);
+    transition: transform 0.75s ease;
+  }
+  .btn-shine:hover::after {
+    transform: translateX(130%);
+  }
+
+  /* Overgang tussen pagina's (Vue <Transition name="page">). */
+  .page-enter-active,
+  .page-leave-active {
+    transition:
+      opacity 0.28s ease,
+      transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .page-enter-from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .page-leave-to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Thema-wissel met een cirkelvormige onthulling (zie shared/theme.ts): de browser maakt een momentopname van oud en nieuw. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

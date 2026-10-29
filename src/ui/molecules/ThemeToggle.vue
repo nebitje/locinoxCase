@@ -7,6 +7,12 @@ const { t } = useI18n()
 const { theme, toggle } = useTheme()
 
 const label = computed(() => (theme.value === 'dark' ? t('theme.toLight') : t('theme.toDark')))
+
+/** De cirkel groeit vanuit het midden van de knop. */
+function onClick(event: MouseEvent) {
+  const box = (event.currentTarget as HTMLElement).getBoundingClientRect()
+  toggle({ x: box.left + box.width / 2, y: box.top + box.height / 2 })
+}
 </script>
 
 <template>
@@ -14,8 +20,8 @@ const label = computed(() => (theme.value === 'dark' ? t('theme.toLight') : t('t
     type="button"
     :aria-label="label"
     :title="label"
-    class="grid h-8 w-8 place-items-center rounded-full border border-line text-ink hover:border-brand hover:text-brand-text"
-    @click="toggle"
+    class="group grid h-9 w-9 place-items-center rounded-full border border-line bg-surface text-ink transition duration-300 hover:rotate-12 hover:border-brand hover:text-brand-text active:scale-90"
+    @click="onClick"
   >
     <svg v-if="theme === 'dark'" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
       <circle cx="12" cy="12" r="4" />
