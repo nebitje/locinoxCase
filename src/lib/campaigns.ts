@@ -1,5 +1,7 @@
 import { supabase } from './supabase'
+import { isAppLocale } from '../i18n/locales'
 import { extensionFor, kindOf, type PostFormat } from './media-validation'
+import type { Variant } from './variants'
 
 const BUCKET = 'campaign-media'
 
@@ -13,7 +15,8 @@ export interface CampaignMedia {
 export interface Campaign {
   id: string
   title: string
-  copy: string
+  /** Alle teksten, in alle talen en varianten. */
+  variants: Variant[]
   createdAt: string
   format: PostFormat
   media: CampaignMedia[]
@@ -21,7 +24,7 @@ export interface Campaign {
 
 export interface NewCampaign {
   title: string
-  copy: string
+  variants: Variant[]
   /** In de gewenste volgorde. */
   files: File[]
 }
@@ -55,12 +58,14 @@ function toCampaign(row: CampaignRow): Campaign {
       mimeType: item.mime_type,
       position: item.position,
     }))
-  const variant = [...row.campaign_variants].sort((a, b) => a.variant_no - b.variant_no)[0]
+  const variants = row.campaign_variants.flatMap((item) =>
+    isAppLocale(item.language) ? [{ language: item.language, variantNo: item.variant_no, copy: item.copy }] : [],
+  )
 
   return {
     id: row.id,
     title: row.title,
-    copy: variant?.copy ?? '',
+    variants,
     createdAt: row.created_at,
     format: formatOf(media),
     media,
@@ -84,8 +89,17 @@ export async function getCampaign(id: string): Promise<Campaign | null> {
 }
 
 /** Registreert een share; mislukt dit, dan blokkeert dat het delen niet. */
-export async function recordShare(campaignId: string, method: 'native' | 'linkedin'): Promise<void> {
-  await supabase.from('shares').insert({ campaign_id: campaignId, method })
+export async function recordShare(
+  campaignId: string,
+  method: 'native' | 'linkedin',
+  variant: Pick<Variant, 'language' | 'variantNo'> | null,
+): Promise<void> {
+  await supabase.from('shares').insert({
+    campaign_id: campaignId,
+    method,
+    language: variant?.language ?? null,
+    variant_no: variant?.variantNo ?? null,
+  })
 }
 
 /**
@@ -117,9 +131,14 @@ export async function createCampaign(
       .insert({ id: campaignId, title: input.title, created_by: userId })
     if (campaignError) throw campaignError
 
-    const { error: variantError } = await supabase
-      .from('campaign_variants')
-      .insert({ campaign_id: campaignId, language: 'en', variant_no: 1, copy: input.copy })
+    const { error: variantError } = await supabase.from('campaign_variants').insert(
+      input.variants.map((variant) => ({
+        campaign_id: campaignId,
+        language: variant.language,
+        variant_no: variant.variantNo,
+        copy: variant.copy,
+      })),
+    )
     if (variantError) throw variantError
 
     const { error: mediaError } = await supabase.from('campaign_media').insert(

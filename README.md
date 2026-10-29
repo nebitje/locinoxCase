@@ -43,7 +43,7 @@ npm run dev
 
 1. Open in het Supabase-dashboard **SQL Editor**, plak de inhoud van [`supabase/migrations/0001_profiles.sql`](supabase/migrations/0001_profiles.sql) en klik op **Run**.
 2. Voer daarna ook [`supabase/migrations/0002_campaigns.sql`](supabase/migrations/0002_campaigns.sql) uit (tabellen voor posts en de opslagbucket `campaign-media`).
-   Voer ook [`supabase/migrations/0003_shares.sql`](supabase/migrations/0003_shares.sql) uit (registratie van shares).
+   Voer ook [`supabase/migrations/0003_shares.sql`](supabase/migrations/0003_shares.sql) (registratie van shares) en [`0004_shares_variant.sql`](supabase/migrations/0004_shares_variant.sql) (taal en variant per share) uit.
 3. Zet de wachtwoorden in `.env` (`SEED_ADMIN_PASSWORD`, `SEED_EMPLOYEE_PASSWORD`).
 4. Maak de testaccounts aan met `npm run seed` (opnieuw uitvoeren mag, het script is idempotent).
 
