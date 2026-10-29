@@ -6,6 +6,7 @@ const BUCKET = 'campaign-media'
 export interface CampaignMedia {
   kind: 'image' | 'video'
   url: string
+  mimeType: string
   position: number
 }
 
@@ -34,18 +35,26 @@ function formatOf(media: CampaignMedia[]): PostFormat {
   return media.length > 1 ? 'carousel' : 'image'
 }
 
+const CAMPAIGN_SELECT =
+  'id, title, created_at, campaign_variants(language, variant_no, copy), campaign_media(kind, storage_path, mime_type, position)'
+
 interface CampaignRow {
   id: string
   title: string
   created_at: string
   campaign_variants: { language: string; variant_no: number; copy: string }[]
-  campaign_media: { kind: 'image' | 'video'; storage_path: string; position: number }[]
+  campaign_media: { kind: 'image' | 'video'; storage_path: string; mime_type: string; position: number }[]
 }
 
 function toCampaign(row: CampaignRow): Campaign {
   const media = [...row.campaign_media]
     .sort((a, b) => a.position - b.position)
-    .map((item) => ({ kind: item.kind, url: publicUrl(item.storage_path), position: item.position }))
+    .map((item) => ({
+      kind: item.kind,
+      url: publicUrl(item.storage_path),
+      mimeType: item.mime_type,
+      position: item.position,
+    }))
   const variant = [...row.campaign_variants].sort((a, b) => a.variant_no - b.variant_no)[0]
 
   return {
@@ -61,13 +70,22 @@ function toCampaign(row: CampaignRow): Campaign {
 export async function listCampaigns(): Promise<Campaign[]> {
   const { data, error } = await supabase
     .from('campaigns')
-    .select(
-      'id, title, created_at, campaign_variants(language, variant_no, copy), campaign_media(kind, storage_path, position)',
-    )
+    .select(CAMPAIGN_SELECT)
     .order('created_at', { ascending: false })
 
   if (error) throw error
   return (data as CampaignRow[]).map(toCampaign)
+}
+
+export async function getCampaign(id: string): Promise<Campaign | null> {
+  const { data, error } = await supabase.from('campaigns').select(CAMPAIGN_SELECT).eq('id', id).maybeSingle()
+  if (error) throw error
+  return data ? toCampaign(data as CampaignRow) : null
+}
+
+/** Registreert een share; mislukt dit, dan blokkeert dat het delen niet. */
+export async function recordShare(campaignId: string, method: 'native' | 'linkedin'): Promise<void> {
+  await supabase.from('shares').insert({ campaign_id: campaignId, method })
 }
 
 /**

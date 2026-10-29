@@ -31,6 +31,12 @@ export const router = createRouter({
       component: () => import('../views/EmployeeHomeView.vue'),
       meta: { roles: ['employee'] },
     },
+    {
+      path: '/posts/:id',
+      name: 'employee-post',
+      component: () => import('../views/EmployeePostView.vue'),
+      meta: { roles: ['employee'] },
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
 })

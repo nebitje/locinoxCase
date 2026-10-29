@@ -43,6 +43,7 @@ npm run dev
 
 1. Open in het Supabase-dashboard **SQL Editor**, plak de inhoud van [`supabase/migrations/0001_profiles.sql`](supabase/migrations/0001_profiles.sql) en klik op **Run**.
 2. Voer daarna ook [`supabase/migrations/0002_campaigns.sql`](supabase/migrations/0002_campaigns.sql) uit (tabellen voor posts en de opslagbucket `campaign-media`).
+   Voer ook [`supabase/migrations/0003_shares.sql`](supabase/migrations/0003_shares.sql) uit (registratie van shares).
 3. Zet de wachtwoorden in `.env` (`SEED_ADMIN_PASSWORD`, `SEED_EMPLOYEE_PASSWORD`).
 4. Maak de testaccounts aan met `npm run seed` (opnieuw uitvoeren mag, het script is idempotent).
 
@@ -63,4 +64,9 @@ docs/            opdracht, beslissingen, onderzoek, uitleg, demo
 
 ## Documentatie
 
-- [`docs/beslissingen.md`](docs/beslissingen.md): gemaakte keuzes en wat bewust niet gebouwd is
+- [`docs/beslissingen.md`](docs/beslissingen.md): gemaakte keuzes, de aanpak en beperkingen van het delen, en wat bewust niet gebouwd is
+- [`docs/testprocedure.md`](docs/testprocedure.md): manuele testprocedure van de kernflow
+
+## Deployment (Vercel)
+
+Zet in Vercel onder **Settings → Environment Variables**: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` en `SUPABASE_SERVICE_ROLE_KEY` (als *Sensitive*). Die laatste gebruikt enkel de serverless functie `api/p.ts` voor de publieke postpagina (`/p/<id>`) en komt nooit in de frontend.
