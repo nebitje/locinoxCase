@@ -186,7 +186,8 @@ Geef ik tijdens het project een nieuwe instructie die blijvend moet gelden? **Vo
 
 | Datum | Instructie |
 |---|---|
-| | |
+| 2026-10-29 | Geef de pull request description altijd in Markdown (in een codeblok, zodat ze 1-op-1 te kopiëren is). |
+| 2026-10-29 | Push zelf met `git push` (de IDE-koppeling met GitHub werkt). Probeer dat eerst; vraag de gebruiker enkel te pushen als het mislukt. Nog steeds enkel pushen nadat de gebruiker bevestigt dat de feature af is. |
 
 ---
 
