@@ -71,7 +71,8 @@ De regels achter deze indeling staan in [`docs/architectuur.md`](docs/architectu
 - [`docs/architectuur.md`](docs/architectuur.md): mappenstructuur, regels en waar nieuwe code thuishoort (voor de overdracht)
 - [`docs/testprocedure.md`](docs/testprocedure.md): manuele testprocedure van de kernflow
 - [`docs/linkedin-onderzoek.md`](docs/linkedin-onderzoek.md): wat LinkedIn officieel toelaat voor integratie en rapportering
-- [`docs/uitleg.md`](docs/uitleg.md): halve pagina uitleg, wat niet werkt en het logboek van wat AI deed
+- [`docs/uitleg.pdf`](docs/uitleg.pdf): de halve pagina uitleg voor de oplevering, in de stijl van de app
+- [`docs/uitleg.md`](docs/uitleg.md): uitgebreide versie van de uitleg, wat niet werkt en het logboek van wat AI deed
 - [`docs/demo.md`](docs/demo.md): script voor de korte demo
 
 ## Deployment (Vercel)

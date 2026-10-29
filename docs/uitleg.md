@@ -1,5 +1,7 @@
 # Uitleg bij het prototype
 
+> **De halve pagina uitleg voor de oplevering staat in [`uitleg.pdf`](uitleg.pdf)** (in de stijl van de app). Dit document is de uitgebreide versie, met het logboek van wat AI per onderdeel deed. De PDF maak je opnieuw met `npm run pdf:uitleg` (bron: [`uitleg-pdf/uitleg.html`](uitleg-pdf/uitleg.html)).
+
 **Prototype:** https://locinox-case.vercel.app (testaccounts: zie de mail bij de oplevering; de wachtwoorden staan bewust niet in de repo). Code: https://github.com/nebitje/locinoxCase
 
 ## Tools en waarom
