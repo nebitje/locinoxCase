@@ -62,6 +62,8 @@ De medewerker moet nergens iets downloaden. De bestanden worden op mobiel vooraf
 - Of een carrousel van meerdere afbeeldingen via het deelvenster als meerdere beelden in LinkedIn terechtkomt, hangt eveneens van de app af. Een echte LinkedIn-carrousel is een PDF-document, wat buiten dit prototype valt.
 - LinkedIn bewaart previews in een cache. Na een wijziging van een post kan de preview tot enkele uren oud blijven; de Post Inspector van LinkedIn kan dat verversen.
 
+**Vast publiek adres voor de deellink:** de deellink gebruikte eerst het adres van de huidige pagina. Wie de app via een unieke deployment-URL van Vercel opende (bijvoorbeeld via de knop *Visit* in het dashboard), deelde daardoor een link achter Vercel-login, en LinkedIn toonde "Dashboard – Vercel" als preview. Gevonden bij de eerste test op productie. Oplossing: de omgevingsvariabele `VITE_PUBLIC_URL` met het vaste publieke domein, met terugval op het huidige adres (getest in `resolvePublicOrigin`).
+
 **Publieke postpagina** (`api/p.ts`): een serverless functie op Vercel die met de service-role-sleutel (enkel op de server) de post leest en een HTML-pagina met Open Graph-tags teruggeeft. Het id is een willekeurige UUID. Mensen worden doorgestuurd naar de app. Titel en beschrijving worden ge-escaped, het id wordt als UUID gevalideerd.
 
 **Registratie van shares:** elke share wordt best-effort in de tabel `shares` bewaard (basis voor latere statistieken). Een mislukte registratie blokkeert het delen niet. Een share is "een klik op delen"; of de medewerker effectief gepost heeft, weten we niet (de deel-URL geeft geen terugkoppeling).

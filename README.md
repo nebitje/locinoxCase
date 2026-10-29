@@ -69,4 +69,13 @@ docs/            opdracht, beslissingen, onderzoek, uitleg, demo
 
 ## Deployment (Vercel)
 
-Zet in Vercel onder **Settings → Environment Variables**: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` en `SUPABASE_SERVICE_ROLE_KEY` (als *Sensitive*). Die laatste gebruikt enkel de serverless functie `api/p.ts` voor de publieke postpagina (`/p/<id>`) en komt nooit in de frontend.
+Zet in Vercel onder **Settings → Environment Variables**:
+
+| Variabele | Waarde |
+|---|---|
+| `VITE_SUPABASE_URL` | Project-URL van Supabase |
+| `VITE_SUPABASE_ANON_KEY` | Publieke (anon) sleutel |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service-role-sleutel, als *Secret*. Enkel gebruikt door de serverless functie `api/p.ts` voor de publieke postpagina (`/p/<id>`); komt nooit in de frontend. |
+| `VITE_PUBLIC_URL` | Het vaste publieke adres, bv. `https://locinox-case.vercel.app` (zonder pad). Daarmee wijst de deellink altijd naar het publieke domein. Zonder deze variabele gebruikt de app het adres van de huidige pagina, en dat is bij een preview- of deployment-URL van Vercel (achter login) onbruikbaar voor LinkedIn. |
+
+Variabelen werken pas na een nieuwe deployment (**Redeploy**).
