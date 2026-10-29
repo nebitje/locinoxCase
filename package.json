@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "test": "vitest run",
-    "seed": "node --env-file=.env scripts/seed.ts"
+    "seed": "node --env-file=.env scripts/seed.ts",
+    "seed:demo": "node --env-file=.env scripts/seed-demo.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
