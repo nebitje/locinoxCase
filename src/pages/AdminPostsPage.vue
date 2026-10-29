@@ -59,7 +59,7 @@ onMounted(() => {
       :retry-label="t('common.retry')"
       @retry="load"
     />
-    <p v-else-if="campaigns.length === 0" class="mt-8 text-slate-600">{{ t('admin.empty') }}</p>
+    <p v-else-if="campaigns.length === 0" class="mt-8 text-ink-muted">{{ t('admin.empty') }}</p>
 
     <ul v-else class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <li v-for="campaign in campaigns" :key="campaign.id">

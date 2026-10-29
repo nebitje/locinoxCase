@@ -49,7 +49,7 @@ function removeVariant(language: AppLocale, index: number) {
 <template>
   <div class="text-sm">
     <span class="font-medium">{{ t('post.copy') }}</span>
-    <p class="text-xs text-slate-500">{{ t('post.copyHelp') }}</p>
+    <p class="text-xs text-ink-subtle">{{ t('post.copyHelp') }}</p>
 
     <SegmentedControl v-model="active" mode="tabs" :options="tabs" class="mt-2" />
 
@@ -58,7 +58,7 @@ function removeVariant(language: AppLocale, index: number) {
         <FormField size="sm" :label="t('post.variant', { n: index + 1, language: t(`language.${language}`) })">
           <BaseTextarea v-model="copies[language][index]" rows="5" :maxlength="MAX_COPY_LENGTH" :disabled="disabled" />
         </FormField>
-        <div class="flex items-center justify-between text-xs text-slate-500">
+        <div class="flex items-center justify-between text-xs text-ink-subtle">
           <span>{{ copies[language][index]?.length ?? 0 }} / {{ MAX_COPY_LENGTH }}</span>
           <BaseButton
             v-if="copies[language].length > 1"

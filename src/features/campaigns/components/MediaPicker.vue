@@ -55,7 +55,7 @@ onBeforeUnmount(() => items.value.forEach((item) => URL.revokeObjectURL(item.pre
 <template>
   <div class="text-sm">
     <span class="font-medium">{{ t('post.media') }}</span>
-    <p class="text-xs text-slate-500">
+    <p class="text-xs text-ink-subtle">
       {{ t('media.help', { maxImage: MAX_IMAGE_BYTES / 1024 / 1024, maxVideo: MAX_VIDEO_BYTES / 1024 / 1024, maxSlides: MAX_CAROUSEL_SLIDES }) }}
     </p>
     <input
@@ -63,22 +63,22 @@ onBeforeUnmount(() => items.value.forEach((item) => URL.revokeObjectURL(item.pre
       multiple
       :accept="ACCEPTED_TYPES.join(',')"
       :disabled="disabled"
-      class="mt-2 block w-full text-sm file:mr-3 file:rounded file:border-0 file:bg-slate-900 file:px-3 file:py-2 file:text-white"
+      class="mt-2 block w-full text-sm file:mr-3 file:rounded file:border-0 file:bg-brand file:px-3 file:py-2 file:text-on-brand"
       @change="onFilesChosen"
     >
 
     <ul v-if="items.length > 0" class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-      <li v-for="(item, index) in items" :key="item.id" class="rounded border border-slate-200 bg-white p-2">
+      <li v-for="(item, index) in items" :key="item.id" class="rounded border border-line bg-surface p-2">
         <video
           v-if="kindOf(item.file) === 'video'"
           :src="item.previewUrl"
-          class="aspect-video w-full rounded bg-slate-100 object-cover"
+          class="aspect-video w-full rounded bg-surface-muted object-cover"
           muted
           playsinline
           controls
         />
-        <img v-else :src="item.previewUrl" :alt="item.file.name" class="aspect-video w-full rounded bg-slate-100 object-cover">
-        <p class="mt-1 truncate text-xs text-slate-600" :title="item.file.name">{{ index + 1 }}. {{ item.file.name }}</p>
+        <img v-else :src="item.previewUrl" :alt="item.file.name" class="aspect-video w-full rounded bg-surface-muted object-cover">
+        <p class="mt-1 truncate text-xs text-ink-muted" :title="item.file.name">{{ index + 1 }}. {{ item.file.name }}</p>
         <div class="mt-1 flex gap-2 text-xs">
           <BaseButton
             variant="secondary"
@@ -105,7 +105,7 @@ onBeforeUnmount(() => items.value.forEach((item) => URL.revokeObjectURL(item.pre
       </li>
     </ul>
 
-    <p v-if="formatLabel" class="mt-2 text-xs text-slate-600">{{ t('media.detected', { format: formatLabel }) }}</p>
+    <p v-if="formatLabel" class="mt-2 text-xs text-ink-muted">{{ t('media.detected', { format: formatLabel }) }}</p>
     <BaseAlert v-if="message" class="mt-2">{{ message }}</BaseAlert>
   </div>
 </template>

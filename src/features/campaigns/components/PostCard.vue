@@ -18,8 +18,8 @@ const snippet = computed(() => {
 </script>
 
 <template>
-  <article class="flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white">
-    <div class="relative aspect-video bg-slate-100">
+  <article class="flex flex-col overflow-hidden border border-line bg-surface shadow-sm">
+    <div class="relative aspect-video bg-surface-muted">
       <video
         v-if="campaign.media[0]?.kind === 'video'"
         :src="campaign.media[0].url"
@@ -42,7 +42,7 @@ const snippet = computed(() => {
     </div>
     <div class="flex flex-1 flex-col gap-2 p-4">
       <h2 class="font-semibold">{{ campaign.title }}</h2>
-      <p class="line-clamp-3 whitespace-pre-line text-sm text-slate-600">{{ snippet }}</p>
+      <p class="line-clamp-3 whitespace-pre-line text-sm text-ink-muted">{{ snippet }}</p>
       <div class="mt-auto pt-2">
         <slot name="actions" />
       </div>

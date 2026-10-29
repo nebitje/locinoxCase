@@ -31,7 +31,7 @@ async function onSubmit(email: string, password: string) {
 <template>
   <PageLayout width="narrow">
     <h1 class="text-2xl font-semibold">{{ t('login.title') }}</h1>
-    <p class="mt-1 text-sm text-slate-600">{{ t('app.tagline') }}</p>
+    <p class="mt-1 text-sm text-ink-muted">{{ t('app.tagline') }}</p>
     <div class="mt-6">
       <LoginForm :loading="loading" :failed="failed" @submit="onSubmit" />
     </div>

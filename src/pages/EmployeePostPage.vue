@@ -49,7 +49,7 @@ onMounted(load)
 
 <template>
   <PageLayout width="medium">
-    <BaseButton variant="link" to="/posts" class="text-slate-600">{{ t('common.back') }}</BaseButton>
+    <BaseButton variant="link" to="/posts" class="text-ink-muted">{{ t('common.back') }}</BaseButton>
 
     <LoadingState v-if="loading" class="mt-6">{{ t('common.loading') }}</LoadingState>
     <ErrorWithRetry
@@ -59,12 +59,12 @@ onMounted(load)
       :retry-label="t('common.retry')"
       @retry="load"
     />
-    <p v-else-if="!campaign" class="mt-6 text-slate-600">{{ t('employee.notFound') }}</p>
+    <p v-else-if="!campaign" class="mt-6 text-ink-muted">{{ t('employee.notFound') }}</p>
 
     <article v-else class="mt-4">
       <PostMedia :campaign="campaign" />
 
-      <p class="mt-3 text-xs font-medium uppercase tracking-wide text-slate-500">
+      <p class="mt-3 text-xs font-medium uppercase tracking-wide text-ink-subtle">
         {{ t(`format.${campaign.format}`) }}
         <template v-if="campaign.format === 'carousel'"> · {{ campaign.media.length }}</template>
       </p>
