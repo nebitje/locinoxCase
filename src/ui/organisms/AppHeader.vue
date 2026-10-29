@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BaseButton from '@/ui/atoms/BaseButton.vue'
+import BrandMark from '@/ui/atoms/BrandMark.vue'
 import LanguageSwitcher from '@/ui/molecules/LanguageSwitcher.vue'
 import ThemeToggle from '@/ui/molecules/ThemeToggle.vue'
 
@@ -14,15 +15,21 @@ const emit = defineEmits<{ signOut: [] }>()
 </script>
 
 <template>
-  <header class="flex flex-wrap items-center justify-between gap-2 border-b border-t-4 border-b-line border-t-brand bg-surface px-4 py-3">
-    <span class="text-lg font-bold uppercase tracking-wider">{{ appName }}</span>
-    <div class="flex items-center gap-3 text-sm text-ink-muted">
-      <LanguageSwitcher />
-      <ThemeToggle />
-      <template v-if="userName">
-        <span class="hidden sm:inline">{{ userName }}</span>
-        <BaseButton variant="secondary" size="xs" @click="emit('signOut')">{{ signOutLabel }}</BaseButton>
-      </template>
+  <header class="sticky top-0 z-30 border-b border-line bg-surface/80 backdrop-blur-md">
+    <span aria-hidden="true" class="absolute inset-x-0 top-0 h-1 origin-left animate-grow-x bg-brand" />
+    <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-3">
+      <span class="flex items-center gap-2.5 text-base font-bold uppercase tracking-wider sm:text-lg">
+        <BrandMark class="h-7 w-7 animate-pop" />
+        {{ appName }}
+      </span>
+      <div class="flex items-center gap-3 text-sm text-ink-muted">
+        <LanguageSwitcher />
+        <ThemeToggle />
+        <template v-if="userName">
+          <span class="hidden sm:inline">{{ userName }}</span>
+          <BaseButton variant="secondary" size="xs" @click="emit('signOut')">{{ signOutLabel }}</BaseButton>
+        </template>
+      </div>
     </div>
   </header>
 </template>

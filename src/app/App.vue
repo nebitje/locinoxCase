@@ -24,6 +24,10 @@ async function onSignOut() {
   />
   <main>
     <LoadingState v-if="!ready" class="px-4 py-10 text-center">{{ t('common.loading') }}</LoadingState>
-    <RouterView v-else />
+    <RouterView v-else v-slot="{ Component }">
+      <Transition name="page" mode="out-in">
+        <component :is="Component" />
+      </Transition>
+    </RouterView>
   </main>
 </template>
