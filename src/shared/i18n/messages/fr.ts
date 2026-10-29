@@ -106,6 +106,10 @@ export default {
       desktopPhone: 'Pour partager les médias eux-mêmes, ouvrez cette page sur votre téléphone.',
     },
   },
+  theme: {
+    toDark: "Passer au mode sombre",
+    toLight: "Passer au mode clair",
+  },
   language: {
     label: 'Langue',
     en: 'English',

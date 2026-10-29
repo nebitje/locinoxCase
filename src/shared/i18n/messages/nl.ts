@@ -106,6 +106,10 @@ export default {
       desktopPhone: 'Om de media zelf te delen, open je deze pagina op je smartphone.',
     },
   },
+  theme: {
+    toDark: "Overschakelen naar donkere modus",
+    toLight: "Overschakelen naar lichte modus",
+  },
   language: {
     label: 'Taal',
     en: 'English',

@@ -14,7 +14,7 @@ function onChange(event: Event) {
 <template>
   <label class="flex items-center gap-2">
     <span class="sr-only sm:not-sr-only">{{ t('language.label') }}</span>
-    <select :value="locale" class="rounded border border-slate-300 bg-white px-2 py-1" @change="onChange">
+    <select :value="locale" class="rounded border border-line bg-surface px-2 py-1" @change="onChange">
       <option v-for="code in SUPPORTED_LOCALES" :key="code" :value="code">
         {{ t(`language.${code}`) }}
       </option>

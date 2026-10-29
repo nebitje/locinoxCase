@@ -106,6 +106,10 @@ export default {
       desktopPhone: 'To share the media itself, open this page on your phone.',
     },
   },
+  theme: {
+    toDark: "Switch to dark mode",
+    toLight: "Switch to light mode",
+  },
   language: {
     label: 'Language',
     en: 'English',

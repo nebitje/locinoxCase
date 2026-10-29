@@ -106,6 +106,10 @@ export default {
       desktopPhone: 'Um die Medien selbst zu teilen, öffne diese Seite auf deinem Smartphone.',
     },
   },
+  theme: {
+    toDark: "Zum dunklen Modus wechseln",
+    toLight: "Zum hellen Modus wechseln",
+  },
   language: {
     label: 'Sprache',
     en: 'English',

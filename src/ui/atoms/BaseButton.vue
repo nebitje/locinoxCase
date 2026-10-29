@@ -19,10 +19,10 @@ const props = withDefaults(
 
 const classes = computed(() => {
   const variants: Record<Variant, string> = {
-    primary: 'rounded bg-slate-900 font-medium text-white disabled:opacity-60',
-    secondary: 'rounded border border-slate-300 bg-white disabled:opacity-60',
-    link: 'underline disabled:opacity-60',
-    'danger-link': 'text-red-700 underline disabled:opacity-50',
+    primary: 'rounded-full bg-brand font-semibold text-on-brand hover:bg-brand-hover disabled:opacity-60',
+    secondary: 'rounded-full border border-line bg-surface text-ink hover:border-brand hover:text-brand-text disabled:opacity-60',
+    link: 'text-brand-text underline underline-offset-2 hover:no-underline disabled:opacity-60',
+    'danger-link': 'text-danger underline disabled:opacity-50',
   }
   const sizes: Record<Size, string> = {
     xs: 'px-3 py-1 text-sm',

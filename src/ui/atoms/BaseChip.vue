@@ -5,8 +5,8 @@ defineProps<{ selected?: boolean }>()
 <template>
   <button
     type="button"
-    :class="selected ? 'border-slate-900 bg-slate-900 text-white' : 'border-slate-300 bg-white'"
-    class="rounded border px-3 py-1"
+    :class="selected ? 'border-brand bg-brand text-on-brand' : 'border-line bg-surface text-ink hover:border-brand'"
+    class="rounded-full border px-3 py-1 font-semibold"
   >
     <slot />
   </button>
