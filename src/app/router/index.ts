@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { initAuth, useAuth, type UserRole } from '@/features/auth/useAuth'
-import { homePathForRole, resolveRedirect } from './guard'
+import { homePathForRole, resolveRedirect } from '@/features/auth/guard'
 
 declare module 'vue-router' {
   interface RouteMeta {

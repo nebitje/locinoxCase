@@ -20,6 +20,11 @@ export function emptyCopyInput(): CopyInput {
   return Object.fromEntries(SUPPORTED_LOCALES.map((locale) => [locale, ['']])) as unknown as CopyInput
 }
 
+/** Heeft de admin al tekst ingevuld voor deze taal? */
+export function hasCopy(input: CopyInput, language: AppLocale): boolean {
+  return input[language].some((copy) => copy.trim() !== '')
+}
+
 /** Zet de invoer om naar varianten: getrimd, zonder lege teksten, per taal doorlopend genummerd vanaf 1. */
 export function toVariants(input: CopyInput): Variant[] {
   return SUPPORTED_LOCALES.flatMap((language) =>

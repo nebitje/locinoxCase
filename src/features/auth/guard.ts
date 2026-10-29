@@ -1,4 +1,4 @@
-import type { UserRole } from '@/features/auth/useAuth'
+import type { UserRole } from './useAuth'
 
 export interface GuardInput {
   /** Rollen die de route mogen openen; leeg of ontbrekend betekent publiek. */

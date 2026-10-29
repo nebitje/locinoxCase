@@ -2,8 +2,9 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { isAppLocale } from '@/shared/i18n/locales'
-import type { Campaign } from '@/features/campaigns/api'
-import { pickVariants } from '@/features/campaigns/variants'
+import BaseBadge from '@/ui/atoms/BaseBadge.vue'
+import type { Campaign } from '../api'
+import { pickVariants } from '../variants'
 
 const props = defineProps<{ campaign: Campaign }>()
 
@@ -34,10 +35,10 @@ const snippet = computed(() => {
         class="h-full w-full object-cover"
         loading="lazy"
       >
-      <span class="absolute left-2 top-2 rounded bg-slate-900/80 px-2 py-0.5 text-xs font-medium text-white">
+      <BaseBadge class="absolute left-2 top-2">
         {{ t(`format.${campaign.format}`) }}
         <template v-if="campaign.format === 'carousel'"> · {{ campaign.media.length }}</template>
-      </span>
+      </BaseBadge>
     </div>
     <div class="flex flex-1 flex-col gap-2 p-4">
       <h2 class="font-semibold">{{ campaign.title }}</h2>

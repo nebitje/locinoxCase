@@ -4,6 +4,7 @@ import {
   MAX_VARIANTS_PER_LANGUAGE,
   availableLanguages,
   emptyCopyInput,
+  hasCopy,
   pickVariants,
   toVariants,
   validateVariants,
@@ -22,6 +23,14 @@ describe('toVariants', () => {
       { language: 'en', variantNo: 2, copy: 'Two' },
     ])
     expect(variants.find((v) => v.language === 'nl')).toEqual({ language: 'nl', variantNo: 1, copy: 'Hoi' })
+  })
+})
+
+describe('hasCopy', () => {
+  it('herkent een taal met tekst en negeert witruimte', () => {
+    const input = filled({ nl: ['   '] })
+    expect(hasCopy(input, 'en')).toBe(true)
+    expect(hasCopy(input, 'nl')).toBe(false)
   })
 })
 
