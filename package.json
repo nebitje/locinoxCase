@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "seed": "node --env-file=.env scripts/seed.ts",
-    "seed:demo": "node --env-file=.env scripts/seed-demo.ts"
+    "seed:demo": "node --env-file=.env scripts/seed-demo.ts",
+    "pdf:uitleg": "node scripts/build-uitleg-pdf.ts"
   },
   "dependencies": {
     "@fontsource-variable/open-sans": "^5.3.0",
