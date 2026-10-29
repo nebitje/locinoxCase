@@ -20,7 +20,7 @@ const PAGES: [source: string, page: string, title: string][] = [
   ['docs/architectuur.md', 'Architectuur', 'Architectuur'],
   ['docs/linkedin-onderzoek.md', 'LinkedIn-onderzoek', 'LinkedIn-onderzoek'],
   ['docs/testprocedure.md', 'Testprocedure', 'Testprocedure'],
-  ['docs/opdracht.md', 'Opdracht', 'De opdracht'],
+  // docs/opdracht.md staat bewust niet in de wiki: dat is de tekst van de opdrachtgever.
 ]
 const HOME = ['README.md', 'Home'] as const
 
