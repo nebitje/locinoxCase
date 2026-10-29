@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildOgHtml, escapeHtml, isUuid } from './_og.js'
+import { buildOgHtml, escapeHtml, isUuid, parseLanguage, pickOgCopy } from './_og.js'
 
 const PAGE = 'https://app.example.com/p/1'
 const APP = 'https://app.example.com/posts/1'
@@ -49,5 +49,33 @@ describe('isUuid', () => {
 describe('escapeHtml', () => {
   it('escapet de gevaarlijke tekens', () => {
     expect(escapeHtml(`<>&"'`)).toBe('&lt;&gt;&amp;&quot;&#39;')
+  })
+})
+
+describe('parseLanguage', () => {
+  it('accepteert enkel ondersteunde talen en valt terug op het Engels', () => {
+    expect(parseLanguage('fr')).toBe('fr')
+    expect(parseLanguage('xx')).toBe('en')
+    expect(parseLanguage('<script>')).toBe('en')
+    expect(parseLanguage(null)).toBe('en')
+  })
+})
+
+describe('pickOgCopy', () => {
+  const variants = [
+    { language: 'en', variant_no: 2, copy: 'EN two' },
+    { language: 'en', variant_no: 1, copy: 'EN one' },
+    { language: 'fr', variant_no: 1, copy: 'FR un' },
+  ]
+
+  it('kiest de eerste variant in de gevraagde taal', () => {
+    expect(pickOgCopy(variants, 'fr')).toBe('FR un')
+    expect(pickOgCopy(variants, 'en')).toBe('EN one')
+  })
+
+  it('valt terug op het Engels en daarna op de eerste tekst', () => {
+    expect(pickOgCopy(variants, 'de')).toBe('EN one')
+    expect(pickOgCopy([variants[2]!], 'de')).toBe('FR un')
+    expect(pickOgCopy([], 'de')).toBe('')
   })
 })

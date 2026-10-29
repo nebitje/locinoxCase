@@ -1,8 +1,8 @@
-import { buildOgHtml, isUuid, notFoundHtml } from './_og.js'
+import { buildOgHtml, isUuid, notFoundHtml, parseLanguage, pickOgCopy, type OgVariant } from './_og.js'
 
 interface PostRow {
   title: string
-  campaign_variants: { language: string; variant_no: number; copy: string }[]
+  campaign_variants: OgVariant[]
   campaign_media: { kind: 'image' | 'video'; storage_path: string; position: number }[]
 }
 
@@ -13,6 +13,7 @@ const HTML = { 'content-type': 'text/html; charset=utf-8' }
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url)
   const id = url.searchParams.get('id')
+  const language = parseLanguage(url.searchParams.get('lang'))
   const supabaseUrl = process.env.VITE_SUPABASE_URL
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
@@ -26,16 +27,16 @@ export async function GET(request: Request): Promise<Response> {
   const [row] = (await response.json()) as PostRow[]
   if (!row) return new Response(notFoundHtml(), { status: 404, headers: HTML })
 
-  const variant = [...row.campaign_variants].sort((a, b) => a.variant_no - b.variant_no)[0]
   const first = [...row.campaign_media].sort((a, b) => a.position - b.position)[0]
   const imageUrl =
     first?.kind === 'image' ? `${supabaseUrl}/storage/v1/object/public/campaign-media/${first.storage_path}` : null
 
   const origin = url.origin
   const html = buildOgHtml(
-    { title: row.title, copy: variant?.copy ?? '', imageUrl },
-    `${origin}/p/${id}`,
+    { title: row.title, copy: pickOgCopy(row.campaign_variants, language), imageUrl },
+    `${origin}/p/${id}?lang=${language}`,
     `${origin}/posts/${id}`,
+    language,
   )
 
   return new Response(html, {
