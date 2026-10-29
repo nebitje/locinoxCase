@@ -38,6 +38,7 @@ npm run dev
 | `npm run lint` | ESLint |
 | `npm test` | Vitest |
 | `npm run seed` | Testaccounts aanmaken in Supabase |
+| `npm run seed:demo` | Demoposts met rechtenvrije foto's aanmaken (zie `scripts/demo-assets/CREDITS.md`); opnieuw uitvoeren vervangt ze |
 
 ### Supabase instellen (eenmalig)
 
