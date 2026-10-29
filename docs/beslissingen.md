@@ -36,6 +36,36 @@ Supabase (database, auth, opslag, Row Level Security) en Vercel (hosting en een 
 - **Geen atomaire opslag:** bestanden uploaden en de rijen opslaan zijn losse aanvragen. Bij een fout ruimt de code de al geüploade bestanden en de campagne op (best effort). In het slechtste geval blijft een los bestand in de bucket achter.
 - **Niet gebouwd:** posts achteraf bewerken, concepten en plannen. Een foute post verwijder je en maak je opnieuw aan.
 
+## Delen door de medewerker
+
+**Wat het onderzoek opleverde**
+
+- LinkedIn's deel-URL (`https://www.linkedin.com/sharing/share-offsite/?url=…`) neemt in de praktijk enkel een `url` aan. Titel, beschrijving en beeld komen uit de Open Graph-tags van die pagina. **Let op:** dit staat niet in de officiële LinkedIn-documentatie (die beschrijft enkel de Share Plugin en de API met OAuth); het is bevestigd door meerdere community-bronnen en moet dus als niet-officieel gelden. Tekst of media meegeven via de URL kan niet.
+- De Web Share API (`navigator.share`) kan tekst en bestanden delen, maar enkel vanuit een klik, enkel via HTTPS, en niet in Firefox op desktop. Altijd vooraf testen met `navigator.canShare({ files })`. Bron: [MDN: Navigator.share()](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share) en [Can I use: Web Share](https://caniuse.com/web-share).
+- Het klembord ondersteunt breed tekst en PNG-afbeeldingen. Bron: [MDN: Clipboard.write()](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/write).
+- Een post met afbeelding, video of carrousel aanmaken via de LinkedIn-API vraagt OAuth met `w_member_social` en een goedgekeurde app; dat bouwen we niet (zie het LinkedIn-onderzoek). Bron: [Share on LinkedIn](https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin).
+
+**Gekozen aanpak**
+
+| Situatie | Wat er gebeurt |
+|---|---|
+| **Mobiel**, bestanden deelbaar | Eén tik op *Delen* opent het deelvenster van het toestel met de bestanden en de tekst. De medewerker kiest LinkedIn. De tekst gaat tegelijk naar het klembord, voor het geval LinkedIn hem niet invult. |
+| **Desktop** (of mobiel zonder bestandsondersteuning) | Eén klik op *Delen op LinkedIn* opent LinkedIn met een link naar onze publieke postpagina (`/p/<id>`). Die pagina heeft Open Graph-tags, zodat LinkedIn een preview met beeld toont. De tekst staat op het klembord en wordt in de post geplakt. |
+| **Desktop, één afbeelding** | Extra knop *Afbeelding kopiëren* (PNG op het klembord), zodat de afbeelding zelf in de LinkedIn-editor geplakt kan worden. |
+
+De medewerker moet nergens iets downloaden. De bestanden worden op mobiel vooraf opgehaald, zodat het deelvenster binnen de klik geopend wordt (Safari weigert dat anders).
+
+**Beperkingen (eerlijk)**
+
+- Op desktop krijgt LinkedIn enkel een link. Een video of de volledige carrousel kan niet automatisch bijgevoegd worden; de preview toont de eerste afbeelding, bij een video is er geen preview-beeld.
+- Op mobiel hangt het van de LinkedIn-app en het besturingssysteem af of de tekst bij de bestanden ingevuld wordt. Daarom staat de tekst ook op het klembord. **Dit moet op echte toestellen getest worden; ik kon dat niet zelf doen.**
+- Of een carrousel van meerdere afbeeldingen via het deelvenster als meerdere beelden in LinkedIn terechtkomt, hangt eveneens van de app af. Een echte LinkedIn-carrousel is een PDF-document, wat buiten dit prototype valt.
+- LinkedIn bewaart previews in een cache. Na een wijziging van een post kan de preview tot enkele uren oud blijven; de Post Inspector van LinkedIn kan dat verversen.
+
+**Publieke postpagina** (`api/p.ts`): een serverless functie op Vercel die met de service-role-sleutel (enkel op de server) de post leest en een HTML-pagina met Open Graph-tags teruggeeft. Het id is een willekeurige UUID. Mensen worden doorgestuurd naar de app. Titel en beschrijving worden ge-escaped, het id wordt als UUID gevalideerd.
+
+**Registratie van shares:** elke share wordt best-effort in de tabel `shares` bewaard (basis voor latere statistieken). Een mislukte registratie blokkeert het delen niet. Een share is "een klik op delen"; of de medewerker effectief gepost heeft, weten we niet (de deel-URL geeft geen terugkoppeling).
+
 ## Bewust niet gebouwd
 
 - Boostcampagnes, admin-dashboard en externe statistieken: alleen onderzocht, tenzij er tijd overblijft.
