@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
+import { useAuth } from '../composables/useAuth'
 import { useSharePost } from '../composables/useSharePost'
+import type { AppLocale } from '../i18n/locales'
 import { getCampaign, type Campaign } from '../lib/campaigns'
+import { availableLanguages, pickVariants } from '../lib/variants'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -13,7 +16,24 @@ const loading = ref(true)
 const notFound = ref(false)
 const loadFailed = ref(false)
 
-const { method, ready, preparing, busy, status, canCopyImage, isMobile, share, copyImage } = useSharePost(campaign)
+const { profile } = useAuth()
+
+// De medewerker ziet standaard de eigen taal en kan wisselen naar elke taal waarin de post bestaat.
+const wantedLanguage = ref<AppLocale>(profile.value?.preferredLanguage ?? 'en')
+const chosenVariantNo = ref(1)
+
+const languages = computed(() => availableLanguages(campaign.value?.variants ?? []))
+const selection = computed(() => pickVariants(campaign.value?.variants ?? [], wantedLanguage.value))
+const selectedVariant = computed(
+  () => selection.value.variants.find((item) => item.variantNo === chosenVariantNo.value) ?? selection.value.variants[0] ?? null,
+)
+
+function chooseLanguage(language: AppLocale) {
+  wantedLanguage.value = language
+  chosenVariantNo.value = 1
+}
+
+const { method, ready, preparing, busy, status, canCopyImage, isMobile, share, copyImage } = useSharePost(campaign, selectedVariant)
 
 async function load() {
   loading.value = true
@@ -72,7 +92,40 @@ onMounted(load)
         <template v-if="campaign.format === 'carousel'"> · {{ campaign.media.length }}</template>
       </p>
       <h1 class="mt-1 text-2xl font-semibold">{{ campaign.title }}</h1>
-      <p class="mt-3 whitespace-pre-line text-slate-700">{{ campaign.copy }}</p>
+      <div v-if="languages.length > 1" class="mt-4 flex flex-wrap items-center gap-2 text-sm" role="group" :aria-label="t('employee.postLanguage')">
+        <span class="text-slate-600">{{ t('employee.postLanguage') }}</span>
+        <button
+          v-for="language in languages"
+          :key="language"
+          type="button"
+          :aria-pressed="selection.language === language"
+          :class="selection.language === language ? 'border-slate-900 bg-slate-900 text-white' : 'border-slate-300 bg-white'"
+          class="rounded border px-3 py-1"
+          @click="chooseLanguage(language)"
+        >
+          {{ language.toUpperCase() }}
+        </button>
+      </div>
+      <p v-if="selection.fellBack && selection.variants.length > 0" class="mt-2 rounded bg-amber-50 px-3 py-2 text-sm text-amber-800">
+        {{ t('employee.fallbackNote', { wanted: t(`language.${wantedLanguage}`), shown: t(`language.${selection.language}`) }) }}
+      </p>
+
+      <fieldset v-if="selection.variants.length > 1" class="mt-3 space-y-2">
+        <legend class="text-sm text-slate-600">{{ t('employee.chooseVariant') }}</legend>
+        <label
+          v-for="item in selection.variants"
+          :key="item.variantNo"
+          :class="selectedVariant?.variantNo === item.variantNo ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-300'"
+          class="flex cursor-pointer gap-3 rounded border bg-white p-3"
+        >
+          <input v-model="chosenVariantNo" type="radio" name="variant" :value="item.variantNo" class="mt-1">
+          <span>
+            <span class="block text-xs font-medium text-slate-500">{{ t('employee.variant', { n: item.variantNo }) }}</span>
+            <span class="block whitespace-pre-line text-slate-700">{{ item.copy }}</span>
+          </span>
+        </label>
+      </fieldset>
+      <p v-else class="mt-3 whitespace-pre-line text-slate-700">{{ selectedVariant?.copy }}</p>
 
       <div class="mt-6 space-y-3">
         <button

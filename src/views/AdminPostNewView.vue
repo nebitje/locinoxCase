@@ -1,9 +1,18 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { computed, onBeforeUnmount, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useAuth } from '../composables/useAuth'
+import { SUPPORTED_LOCALES, type AppLocale } from '../i18n/locales'
 import { createCampaign } from '../lib/campaigns'
+import {
+  MAX_COPY_LENGTH,
+  MAX_VARIANTS_PER_LANGUAGE,
+  REQUIRED_LANGUAGES,
+  emptyCopyInput,
+  toVariants,
+  validateVariants,
+} from '../lib/variants'
 import {
   ACCEPTED_TYPES,
   MAX_CAROUSEL_SLIDES,
@@ -20,14 +29,14 @@ interface Item {
 }
 
 const MAX_TITLE = 120
-const MAX_COPY = 3000
 
 const { t } = useI18n()
 const router = useRouter()
 const { profile } = useAuth()
 
 const title = ref('')
-const copy = ref('')
+const copies = reactive(emptyCopyInput())
+const activeLanguage = ref<AppLocale>('en')
 const items = ref<Item[]>([])
 const submitting = ref(false)
 const progress = ref({ done: 0, total: 0 })
@@ -45,9 +54,33 @@ const mediaMessage = computed(() => {
     maxSlides: MAX_CAROUSEL_SLIDES,
   })
 })
+const variantsError = computed(() => validateVariants(copies))
+const variantsMessage = computed(() => {
+  const error = variantsError.value
+  if (!error || !(touched.value || SUPPORTED_LOCALES.some(hasCopy))) return null
+  if (error.code === 'missingLanguages') {
+    return t('post.errors.missingLanguages', {
+      languages: error.languages.map((language) => t(`language.${language}`)).join(', '),
+    })
+  }
+  return t(`post.errors.${error.code}`, { max: MAX_VARIANTS_PER_LANGUAGE })
+})
 const canSubmit = computed(
-  () => !submitting.value && title.value.trim() !== '' && copy.value.trim() !== '' && check.value.ok,
+  () => !submitting.value && title.value.trim() !== '' && variantsError.value === null && check.value.ok,
 )
+
+function hasCopy(language: AppLocale): boolean {
+  return copies[language].some((text) => text.trim() !== '')
+}
+
+function addVariant(language: AppLocale) {
+  if (copies[language].length < MAX_VARIANTS_PER_LANGUAGE) copies[language].push('')
+}
+
+function removeVariant(language: AppLocale, index: number) {
+  copies[language].splice(index, 1)
+  if (copies[language].length === 0) copies[language].push('')
+}
 
 function onFilesChosen(event: Event) {
   const input = event.target as HTMLInputElement
@@ -81,7 +114,7 @@ async function onSubmit() {
   progress.value = { done: 0, total: items.value.length }
   try {
     await createCampaign(
-      { title: title.value.trim(), copy: copy.value.trim(), files: items.value.map((item) => item.file) },
+      { title: title.value.trim(), variants: toVariants(copies), files: items.value.map((item) => item.file) },
       profile.value.id,
       (done, total) => (progress.value = { done, total }),
     )
@@ -113,17 +146,72 @@ onBeforeUnmount(() => items.value.forEach((item) => URL.revokeObjectURL(item.pre
         >
       </label>
 
-      <label class="block text-sm">
+      <div class="text-sm">
         <span class="font-medium">{{ t('post.copy') }}</span>
-        <textarea
-          v-model="copy"
-          required
-          rows="6"
-          :maxlength="MAX_COPY"
-          class="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2"
-        />
-        <span class="text-xs text-slate-500">{{ copy.length }} / {{ MAX_COPY }}</span>
-      </label>
+        <p class="text-xs text-slate-500">{{ t('post.copyHelp') }}</p>
+
+        <div class="mt-2 flex flex-wrap gap-2" role="tablist">
+          <button
+            v-for="language in SUPPORTED_LOCALES"
+            :key="language"
+            type="button"
+            role="tab"
+            :aria-selected="activeLanguage === language"
+            :class="activeLanguage === language ? 'border-slate-900 bg-slate-900 text-white' : 'border-slate-300 bg-white'"
+            class="rounded border px-3 py-1"
+            @click="activeLanguage = language"
+          >
+            {{ language.toUpperCase() }}
+            <span v-if="hasCopy(language)" aria-hidden="true">✓</span>
+            <span v-else-if="REQUIRED_LANGUAGES.includes(language)" aria-hidden="true">*</span>
+            <span class="sr-only">
+              {{ hasCopy(language) ? t('post.tabFilled') : REQUIRED_LANGUAGES.includes(language) ? t('post.tabRequired') : t('post.tabOptional') }}
+            </span>
+          </button>
+        </div>
+
+        <div v-for="language in SUPPORTED_LOCALES" v-show="activeLanguage === language" :key="language" class="mt-3 space-y-3">
+          <div v-for="(_, index) in copies[language]" :key="index">
+            <label class="block">
+              <span class="text-xs font-medium text-slate-600">
+                {{ t('post.variant', { n: index + 1, language: t(`language.${language}`) }) }}
+              </span>
+              <textarea
+                v-model="copies[language][index]"
+                rows="5"
+                :maxlength="MAX_COPY_LENGTH"
+                :disabled="submitting"
+                class="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2"
+              />
+            </label>
+            <div class="flex items-center justify-between text-xs text-slate-500">
+              <span>{{ copies[language][index]?.length ?? 0 }} / {{ MAX_COPY_LENGTH }}</span>
+              <button
+                v-if="copies[language].length > 1"
+                type="button"
+                :disabled="submitting"
+                class="text-red-700 underline"
+                @click="removeVariant(language, index)"
+              >
+                {{ t('post.removeVariant') }}
+              </button>
+            </div>
+          </div>
+          <button
+            v-if="copies[language].length < MAX_VARIANTS_PER_LANGUAGE"
+            type="button"
+            :disabled="submitting"
+            class="rounded border border-slate-300 bg-white px-3 py-1 text-xs"
+            @click="addVariant(language)"
+          >
+            {{ t('post.addVariant') }}
+          </button>
+        </div>
+
+        <p v-if="variantsMessage" role="alert" class="mt-2 rounded bg-red-50 px-3 py-2 text-sm text-red-700">
+          {{ variantsMessage }}
+        </p>
+      </div>
 
       <div class="text-sm">
         <span class="font-medium">{{ t('post.media') }}</span>

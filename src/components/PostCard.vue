@@ -1,10 +1,19 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { isAppLocale } from '../i18n/locales'
 import type { Campaign } from '../lib/campaigns'
+import { pickVariants } from '../lib/variants'
 
-defineProps<{ campaign: Campaign }>()
+const props = defineProps<{ campaign: Campaign }>()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+
+/** Korte tekst in de taal van de interface, met terugval op het Engels. */
+const snippet = computed(() => {
+  const wanted = isAppLocale(locale.value) ? locale.value : 'en'
+  return pickVariants(props.campaign.variants, wanted).variants[0]?.copy ?? ''
+})
 </script>
 
 <template>
@@ -32,7 +41,7 @@ const { t } = useI18n()
     </div>
     <div class="flex flex-1 flex-col gap-2 p-4">
       <h2 class="font-semibold">{{ campaign.title }}</h2>
-      <p class="line-clamp-3 whitespace-pre-line text-sm text-slate-600">{{ campaign.copy }}</p>
+      <p class="line-clamp-3 whitespace-pre-line text-sm text-slate-600">{{ snippet }}</p>
       <div class="mt-auto pt-2">
         <slot name="actions" />
       </div>

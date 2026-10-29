@@ -1,5 +1,6 @@
 import { computed, ref, watch, type Ref } from 'vue'
 import { recordShare, type Campaign } from '../lib/campaigns'
+import type { Variant } from '../lib/variants'
 import {
   choosePrimaryMethod,
   fileNameFor,
@@ -46,7 +47,8 @@ async function toPngBlob(url: string): Promise<Blob> {
   )
 }
 
-export function useSharePost(campaign: Ref<Campaign | null>) {
+/** De variant die de medewerker wil delen: de tekst, plus taal en nummer voor de link en de registratie. */
+export function useSharePost(campaign: Ref<Campaign | null>, variant: Ref<Variant | null>) {
   const isMobile = isMobileDevice()
   const files = ref<File[]>([])
   const preparing = ref(false)
@@ -88,30 +90,31 @@ export function useSharePost(campaign: Ref<Campaign | null>) {
 
   function share() {
     const current = campaign.value
-    if (!current || busy.value) return
+    const chosen = variant.value
+    if (!current || !chosen || busy.value) return
     status.value = null
-    if (method.value === 'native') void shareNative(current)
-    else shareViaLinkedIn(current)
+    if (method.value === 'native') void shareNative(current, chosen)
+    else shareViaLinkedIn(current, chosen)
   }
 
   // Let op: geen `await` vóór window.open of navigator.share, anders gaat de klik als gebruikersactie verloren.
-  function shareViaLinkedIn(current: Campaign) {
-    const copied = writeText(current.copy)
+  function shareViaLinkedIn(current: Campaign, chosen: Variant) {
+    const copied = writeText(chosen.copy)
     const origin = resolvePublicOrigin(import.meta.env.VITE_PUBLIC_URL, window.location.origin)
-    window.open(linkedInShareUrl(publicPostUrl(origin, current.id)), '_blank', 'noopener')
+    window.open(linkedInShareUrl(publicPostUrl(origin, current.id, chosen.language)), '_blank', 'noopener')
     void copied.then((ok) => {
       status.value = { key: ok ? 'linkedinOpenedCopied' : 'linkedinOpenedNotCopied', tone: ok ? 'success' : 'error' }
     })
-    void recordShare(current.id, 'linkedin')
+    void recordShare(current.id, 'linkedin', chosen)
   }
 
-  async function shareNative(current: Campaign) {
+  async function shareNative(current: Campaign, chosen: Variant) {
     busy.value = true
-    const copied = writeText(current.copy)
+    const copied = writeText(chosen.copy)
     try {
-      await navigator.share({ files: files.value, text: current.copy, title: current.title })
+      await navigator.share({ files: files.value, text: chosen.copy, title: current.title })
       status.value = { key: (await copied) ? 'nativeSharedCopied' : 'nativeShared', tone: 'success' }
-      void recordShare(current.id, 'native')
+      void recordShare(current.id, 'native', chosen)
     } catch (error) {
       // AbortError: de gebruiker sloot het deelvenster zelf; dat is geen fout.
       if (!(error instanceof DOMException && error.name === 'AbortError')) {
