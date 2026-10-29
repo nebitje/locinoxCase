@@ -11,9 +11,11 @@
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "seed": "node --env-file=.env scripts/seed.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
     "vue": "^3.5.44",
     "vue-i18n": "^11.4.16",
     "vue-router": "^5.4.0"

@@ -3,9 +3,27 @@ export default {
     name: 'Locinox Advocacy',
     tagline: 'Share ready-made posts with your network.',
   },
-  home: {
-    title: 'Welcome',
-    status: 'The platform is being set up.',
+  common: {
+    loading: "Loading…",
+  },
+  login: {
+    title: 'Sign in',
+    email: 'Email',
+    password: 'Password',
+    submit: 'Sign in',
+    loading: 'Signing in…',
+    failed: 'Sign-in failed. Check your email and password.',
+  },
+  auth: {
+    signOut: 'Sign out',
+  },
+  admin: {
+    title: 'Admin',
+    placeholder: 'Posts will be managed here soon.',
+  },
+  employee: {
+    title: 'Posts to share',
+    placeholder: 'Ready-made posts will appear here soon.',
   },
   language: {
     label: 'Language',

@@ -18,6 +18,14 @@ Log van de belangrijke keuzes: wat, waarom, welke alternatieven, en wat bewust n
 
 Supabase (database, auth, opslag, Row Level Security) en Vercel (hosting en een serverless functie voor de Open Graph-pagina). Alternatieven (eigen Node-API met SQLite, Firebase) zijn afgewogen in het plan: meer eigen code of omslachtiger rollen en datamodel.
 
+## Authenticatie en rollen
+
+- Supabase Auth (e-mail en wachtwoord) met een tabel `profiles` (rol, naam, voorkeurstaal).
+- De rol wordt op de server afgedwongen met Row Level Security: een gebruiker ziet enkel zijn eigen profiel, admins zien alle profielen, en `role` kan niet vanuit de client gewijzigd worden (kolomrechten: enkel `preferred_language`). Route-guards in de frontend zijn enkel UX; de echte controle volgt in de RLS-regels van elke tabel.
+- Geen registratie: de testaccounts komen uit een idempotent seedscript (`npm run seed`) dat wachtwoorden uit omgevingsvariabelen leest. De seed gebruikt de service-role-sleutel en draait enkel lokaal.
+- Testaccounts gebruiken `@example.com`-adressen (gereserveerd domein), zodat er nooit mail naar een echt adres kan gaan.
+- Alternatief: rol in de JWT-metadata. Niet gekozen, omdat een rolwijziging dan pas bij de volgende login geldt.
+
 ## Bewust niet gebouwd
 
 - Boostcampagnes, admin-dashboard en externe statistieken: alleen onderzocht, tenzij er tijd overblijft.

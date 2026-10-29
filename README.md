@@ -14,10 +14,10 @@ Publieke link: _volgt na de eerste deployment_.
 
 | Rol | Taal | E-mail |
 |---|---|---|
-| Admin | EN | _volgt_ |
-| Medewerker 1 | EN | _volgt_ |
-| Medewerker 2 | FR | _volgt_ |
-| Medewerker 3 | DE | _volgt_ |
+| Admin | EN | admin@example.com |
+| Medewerker 1 | EN | employee.en@example.com |
+| Medewerker 2 | FR | employee.fr@example.com |
+| Medewerker 3 | DE | employee.de@example.com |
 
 De wachtwoorden staan niet in de repo. Ze worden bij het seeden uit omgevingsvariabelen gelezen.
 
@@ -37,6 +37,13 @@ npm run dev
 | `npm run build` | Typecheck en productiebuild |
 | `npm run lint` | ESLint |
 | `npm test` | Vitest |
+| `npm run seed` | Testaccounts aanmaken in Supabase |
+
+### Supabase instellen (eenmalig)
+
+1. Open in het Supabase-dashboard **SQL Editor**, plak de inhoud van [`supabase/migrations/0001_profiles.sql`](supabase/migrations/0001_profiles.sql) en klik op **Run**.
+2. Zet de wachtwoorden in `.env` (`SEED_ADMIN_PASSWORD`, `SEED_EMPLOYEE_PASSWORD`).
+3. Maak de testaccounts aan met `npm run seed` (opnieuw uitvoeren mag, het script is idempotent).
 
 ## Structuur
 
@@ -48,6 +55,8 @@ src/
   lib/           clients en helpers (Supabase, delen)
   router/        routes en guards
   i18n/          interfacevertalingen (EN, FR, DE, NL)
+scripts/         seedscript voor testaccounts
+supabase/        SQL-migraties
 docs/            opdracht, beslissingen, onderzoek, uitleg, demo
 ```
 
