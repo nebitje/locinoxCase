@@ -7,7 +7,7 @@ import { SUPPORTED_LOCALES, isAppLocale } from './i18n/locales'
 
 const { t, locale } = useI18n()
 const router = useRouter()
-const { profile, isAuthenticated, signOut } = useAuth()
+const { profile, ready, isAuthenticated, signOut } = useAuth()
 
 function onLocaleChange(event: Event) {
   const value = (event.target as HTMLSelectElement).value
@@ -45,6 +45,9 @@ async function onSignOut() {
     </div>
   </header>
   <main>
-    <RouterView />
+    <p v-if="!ready" role="status" class="px-4 py-10 text-center text-sm text-slate-500">
+      {{ t('common.loading') }}
+    </p>
+    <RouterView v-else />
   </main>
 </template>

@@ -3,6 +3,9 @@ export default {
     name: 'Locinox Advocacy',
     tagline: 'Share ready-made posts with your network.',
   },
+  common: {
+    loading: "Loading…",
+  },
   login: {
     title: 'Sign in',
     email: 'Email',

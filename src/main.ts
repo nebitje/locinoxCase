@@ -7,7 +7,7 @@ import { router } from './router'
 
 document.documentElement.lang = i18n.global.locale.value
 
-// De sessie wordt eerst hersteld, zodat de route-guard de rol kent bij de eerste navigatie.
-await initAuth()
+// De app wordt meteen getoond; de route-guard wacht zelf op het herstellen van de sessie.
+void initAuth()
 
 createApp(App).use(router).use(i18n).mount('#app')

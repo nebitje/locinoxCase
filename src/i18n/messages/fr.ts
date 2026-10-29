@@ -3,6 +3,9 @@ export default {
     name: 'Locinox Advocacy',
     tagline: 'Partagez des publications prêtes à l’emploi avec votre réseau.',
   },
+  common: {
+    loading: "Chargement…",
+  },
   login: {
     title: 'Connexion',
     email: 'E-mail',

@@ -32,13 +32,18 @@ async function loadProfile(userId: string): Promise<Profile | null> {
   }
 }
 
-/** Herstelt een bestaande sessie bij het opstarten van de app. */
-export async function initAuth() {
-  const { data } = await supabase.auth.getSession()
-  const user = data.session?.user
-  profile.value = user ? await loadProfile(user.id) : null
-  if (profile.value) setLocale(profile.value.preferredLanguage)
-  ready.value = true
+let initPromise: Promise<void> | null = null
+
+/** Herstelt een bestaande sessie; veilig om meerdere keren aan te roepen. */
+export function initAuth(): Promise<void> {
+  initPromise ??= (async () => {
+    const { data } = await supabase.auth.getSession()
+    const user = data.session?.user
+    profile.value = user ? await loadProfile(user.id) : null
+    if (profile.value) setLocale(profile.value.preferredLanguage)
+    ready.value = true
+  })()
+  return initPromise
 }
 
 export function useAuth() {

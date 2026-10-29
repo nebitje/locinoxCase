@@ -3,6 +3,9 @@ export default {
     name: 'Locinox Advocacy',
     tagline: 'Deel kant-en-klare posts met je netwerk.',
   },
+  common: {
+    loading: "Laden…",
+  },
   login: {
     title: 'Aanmelden',
     email: 'E-mail',

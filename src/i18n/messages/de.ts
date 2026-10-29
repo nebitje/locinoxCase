@@ -3,6 +3,9 @@ export default {
     name: 'Locinox Advocacy',
     tagline: 'Teile fertige Beiträge mit deinem Netzwerk.',
   },
+  common: {
+    loading: "Laden…",
+  },
   login: {
     title: 'Anmelden',
     email: 'E-Mail',

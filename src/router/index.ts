@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuth, type UserRole } from '../composables/useAuth'
+import { initAuth, useAuth, type UserRole } from '../composables/useAuth'
 import { homePathForRole, resolveRedirect } from './guard'
 
 declare module 'vue-router' {
@@ -29,7 +29,9 @@ export const router = createRouter({
   ],
 })
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
+  // De app is al zichtbaar; de eerste navigatie wacht tot de sessie hersteld is.
+  await initAuth()
   const { role } = useAuth()
 
   if (to.name === 'root') return role.value ? homePathForRole(role.value) : '/login'
