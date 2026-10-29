@@ -4,11 +4,11 @@ Prototype van een employee advocacy platform: een **admin** zet social-mediapost
 
 De opdracht staat in [`docs/opdracht.md`](docs/opdracht.md), de werkafspraken in [`AGENTS.md`](AGENTS.md).
 
-> Status: projectsetup. De kernflow (auth, posts klaarzetten, delen) volgt in aparte feature-branches.
+> Status: de kernflow (login met twee rollen, posts klaarzetten, overnemen en delen) en de uitbreiding met meerdere talen en varianten werken. Wat niet werkt of niet getest is, staat in [`docs/uitleg.md`](docs/uitleg.md).
 
 ## Prototype
 
-Publieke link: _volgt na de eerste deployment_.
+Publieke link: https://locinox-case.vercel.app
 
 ## Testaccounts
 
@@ -66,6 +66,9 @@ docs/            opdracht, beslissingen, onderzoek, uitleg, demo
 
 - [`docs/beslissingen.md`](docs/beslissingen.md): gemaakte keuzes, de aanpak en beperkingen van het delen, en wat bewust niet gebouwd is
 - [`docs/testprocedure.md`](docs/testprocedure.md): manuele testprocedure van de kernflow
+- [`docs/linkedin-onderzoek.md`](docs/linkedin-onderzoek.md): wat LinkedIn officieel toelaat voor integratie en rapportering
+- [`docs/uitleg.md`](docs/uitleg.md): halve pagina uitleg, wat niet werkt en het logboek van wat AI deed
+- [`docs/demo.md`](docs/demo.md): script voor de korte demo
 
 ## Deployment (Vercel)
 

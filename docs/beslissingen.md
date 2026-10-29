@@ -58,7 +58,7 @@ De medewerker moet nergens iets downloaden. De bestanden worden op mobiel vooraf
 **Beperkingen (eerlijk)**
 
 - Op desktop krijgt LinkedIn enkel een link. Een video of de volledige carrousel kan niet automatisch bijgevoegd worden; de preview toont de eerste afbeelding, bij een video is er geen preview-beeld.
-- Op mobiel hangt het van de LinkedIn-app en het besturingssysteem af of de tekst bij de bestanden ingevuld wordt. Daarom staat de tekst ook op het klembord. **Dit moet op echte toestellen getest worden; ik kon dat niet zelf doen.**
+- Op mobiel hangt het van de LinkedIn-app en het besturingssysteem af of de tekst bij de bestanden ingevuld wordt. Daarom staat de tekst ook op het klembord. **Test op een echt toestel:** op Android Chrome opent het deelvenster van de telefoon met de bestanden en werkt het delen naar LinkedIn goed. Op desktop (Firefox) opent LinkedIn met de link en de preview. **iPhone (Safari) is niet getest**, video en carrousel op mobiel zijn niet apart gedocumenteerd getest.
 - Of een carrousel van meerdere afbeeldingen via het deelvenster als meerdere beelden in LinkedIn terechtkomt, hangt eveneens van de app af. Een echte LinkedIn-carrousel is een PDF-document, wat buiten dit prototype valt.
 - LinkedIn bewaart previews in een cache. Na een wijziging van een post kan de preview tot enkele uren oud blijven; de Post Inspector van LinkedIn kan dat verversen.
 
