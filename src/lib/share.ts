@@ -33,8 +33,8 @@ export function resolvePublicOrigin(configured: string | undefined, currentOrigi
 }
 
 /** De publieke pagina met Open Graph-tags waar LinkedIn de preview vandaan haalt. */
-export function publicPostUrl(origin: string, campaignId: string): string {
-  return `${origin}/p/${campaignId}`
+export function publicPostUrl(origin: string, campaignId: string, language?: string): string {
+  return language ? `${origin}/p/${campaignId}?lang=${language}` : `${origin}/p/${campaignId}`
 }
 
 /** LinkedIn accepteert in deze URL enkel de link; titel, tekst en beeld komen uit de Open Graph-tags. */

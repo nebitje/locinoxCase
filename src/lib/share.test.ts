@@ -43,6 +43,10 @@ describe('URL-opbouw', () => {
     expect(publicPostUrl('https://app.example.com', 'abc')).toBe('https://app.example.com/p/abc')
   })
 
+  it('voegt de taal toe aan de publieke postlink', () => {
+    expect(publicPostUrl('https://app.example.com', 'abc', 'fr')).toBe('https://app.example.com/p/abc?lang=fr')
+  })
+
   it('codeert de link in de LinkedIn-share-URL', () => {
     const url = linkedInShareUrl('https://app.example.com/p/abc?x=1&y=2')
     expect(url).toBe(
