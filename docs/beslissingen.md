@@ -80,6 +80,13 @@ De medewerker moet nergens iets downloaden. De bestanden worden op mobiel vooraf
 - **Niet gebouwd:** een vertaling per titel, automatische vertaling met AI, een taal-specifiek beeld, posts achteraf bewerken.
 - **Interfacetaal en posttaal zijn los van elkaar:** de interface volgt de taalkiezer bovenaan, de posttaal volgt het profiel van de medewerker en kan per post gewijzigd worden.
 
+## Structuur van de code (overdracht)
+
+- **Hybride in plaats van zuiver atomic design:** atoms, molecules, organisms en templates enkel voor herbruikbare UI (`ui/`); domeinonderdelen (een post, delen) staan per feature in `features/`. Zie [`architectuur.md`](architectuur.md) voor de redenering en de regels.
+- **De regels worden afgedwongen met een test** (`tests/architecture.test.ts`): lagen kijken alleen naar beneden, features zijn onafhankelijk, geen relatieve imports tussen lagen. Zo blijft de structuur behouden als meerdere mensen eraan werken.
+- **Herschikken zonder gedragswijziging:** alle bestaande tests en de manuele testprocedure bleven ongewijzigd. De enige logische wijzigingen zijn kleine extraheringen (`useCampaignList`, `useVariantSelection`, `hasCopy`) om pagina's dun te maken.
+- **Niet gedaan:** componenttests en end-to-end-tests (zou een extra testbibliotheek vragen). Dat staat als logische vervolgstap in de architectuurdocumentatie.
+
 ## Bewust niet gebouwd
 
 - Boostcampagnes, admin-dashboard en externe statistieken: alleen onderzocht, tenzij er tijd overblijft.

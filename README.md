@@ -52,20 +52,23 @@ npm run dev
 
 ```
 src/
-  views/         pagina's per route
-  components/    herbruikbare componenten
-  composables/   gedeelde logica (Composition API)
-  lib/           clients en helpers (Supabase, delen)
-  router/        routes en guards
-  i18n/          interfacevertalingen (EN, FR, DE, NL)
-scripts/         seedscript voor testaccounts
+  app/           applicatie: App.vue, router, globale stijl
+  pages/         één bestand per route (dun, stelt samen)
+  features/      per domein: auth, campaigns, sharing (logica en componenten)
+  ui/            herbruikbare bouwstenen: atoms, molecules, organisms, templates
+  shared/        vertalingen (EN, FR, DE, NL) en de Supabase-client
+api/             serverless functie voor de publieke postpagina (Open Graph)
+scripts/         seedscripts (testaccounts en demoposts)
 supabase/        SQL-migraties
-docs/            opdracht, beslissingen, onderzoek, uitleg, demo
+docs/            opdracht, beslissingen, architectuur, onderzoek, uitleg, demo
 ```
+
+De regels achter deze indeling staan in [`docs/architectuur.md`](docs/architectuur.md) en worden door een test bewaakt.
 
 ## Documentatie
 
 - [`docs/beslissingen.md`](docs/beslissingen.md): gemaakte keuzes, de aanpak en beperkingen van het delen, en wat bewust niet gebouwd is
+- [`docs/architectuur.md`](docs/architectuur.md): mappenstructuur, regels en waar nieuwe code thuishoort (voor de overdracht)
 - [`docs/testprocedure.md`](docs/testprocedure.md): manuele testprocedure van de kernflow
 - [`docs/linkedin-onderzoek.md`](docs/linkedin-onderzoek.md): wat LinkedIn officieel toelaat voor integratie en rapportering
 - [`docs/uitleg.md`](docs/uitleg.md): halve pagina uitleg, wat niet werkt en het logboek van wat AI deed
