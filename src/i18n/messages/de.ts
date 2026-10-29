@@ -61,7 +61,34 @@ export default {
   },
   employee: {
     title: 'Beiträge zum Teilen',
-    placeholder: 'Fertige Beiträge erscheinen hier bald.',
+    loadFailed: 'Die Beiträge konnten nicht geladen werden.',
+    empty: 'Noch keine Beiträge verfügbar.',
+    open: 'Öffnen und teilen',
+    notFound: 'Dieser Beitrag existiert nicht oder wurde entfernt.',
+  },
+  share: {
+    preparing: 'Medien werden vorbereitet…',
+    sharing: 'Wird geteilt…',
+    copyImage: 'Bild kopieren',
+    button: {
+      native: 'Teilen',
+      linkedin: 'Auf LinkedIn teilen',
+    },
+    status: {
+      nativeShared: 'Geteilt.',
+      nativeSharedCopied: 'Geteilt. Der Text wurde auch kopiert: Fehlt er in deinem Beitrag, füge ihn ein.',
+      linkedinOpenedCopied: 'LinkedIn ist geöffnet und der Text ist kopiert. Füge ihn in deinen Beitrag ein (Strg+V oder lange tippen).',
+      linkedinOpenedNotCopied: 'LinkedIn ist geöffnet, aber der Text konnte nicht kopiert werden. Markiere den Text oben und kopiere ihn selbst.',
+      imageCopied: 'Bild kopiert. Füge es in deinen LinkedIn-Beitrag ein.',
+      imageCopyFailed: 'Das Bild konnte nicht kopiert werden.',
+      shareFailed: 'Teilen fehlgeschlagen. Bitte versuche es erneut.',
+    },
+    hint: {
+      native: 'Das Teilen-Menü deines Geräts öffnet sich mit Text und Medien. Wähle LinkedIn. Der Text wird zusätzlich kopiert, falls die App ihn nicht übernimmt.',
+      linkedinImage: 'LinkedIn öffnet sich mit einem Link zu diesem Beitrag und einem Vorschaubild. Der Text ist kopiert; füge ihn in deinen Beitrag ein. Mit „Bild kopieren“ fügst du das Bild selbst ein.',
+      linkedinMedia: 'LinkedIn öffnet sich mit einem Link zu diesem Beitrag und der Text ist kopiert; füge ihn in deinen Beitrag ein. Das Video oder das ganze Karussell kann von hier nicht angehängt werden.',
+      desktopPhone: 'Um die Medien selbst zu teilen, öffne diese Seite auf deinem Smartphone.',
+    },
   },
   language: {
     label: 'Sprache',

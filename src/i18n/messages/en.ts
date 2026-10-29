@@ -61,7 +61,34 @@ export default {
   },
   employee: {
     title: 'Posts to share',
-    placeholder: 'Ready-made posts will appear here soon.',
+    loadFailed: 'Posts could not be loaded.',
+    empty: 'No posts available yet.',
+    open: 'Open and share',
+    notFound: 'This post does not exist or was removed.',
+  },
+  share: {
+    preparing: 'Preparing media…',
+    sharing: 'Sharing…',
+    copyImage: 'Copy image',
+    button: {
+      native: 'Share',
+      linkedin: 'Share on LinkedIn',
+    },
+    status: {
+      nativeShared: 'Shared.',
+      nativeSharedCopied: 'Shared. The text was also copied: if it is missing in your post, paste it.',
+      linkedinOpenedCopied: 'LinkedIn opened and the text is copied. Paste it into your post (Ctrl+V or long-press).',
+      linkedinOpenedNotCopied: 'LinkedIn opened, but the text could not be copied. Select the text above and copy it yourself.',
+      imageCopied: 'Image copied. Paste it into your LinkedIn post.',
+      imageCopyFailed: 'The image could not be copied.',
+      shareFailed: 'Sharing failed. Please try again.',
+    },
+    hint: {
+      native: 'Your device’s share menu opens with the text and media. Choose LinkedIn. The text is also copied in case the app does not fill it in.',
+      linkedinImage: 'LinkedIn opens with a link to this post and a preview image. The text is copied; paste it into your post. Use “Copy image” to paste the image itself.',
+      linkedinMedia: 'LinkedIn opens with a link to this post and the text is copied; paste it into your post. The video or the full carousel cannot be attached from here.',
+      desktopPhone: 'To share the media itself, open this page on your phone.',
+    },
   },
   language: {
     label: 'Language',

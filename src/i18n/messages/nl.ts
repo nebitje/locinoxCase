@@ -61,7 +61,34 @@ export default {
   },
   employee: {
     title: 'Posts om te delen',
-    placeholder: 'Kant-en-klare posts verschijnen hier binnenkort.',
+    loadFailed: 'De posts konden niet geladen worden.',
+    empty: 'Nog geen posts beschikbaar.',
+    open: 'Openen en delen',
+    notFound: 'Deze post bestaat niet of is verwijderd.',
+  },
+  share: {
+    preparing: 'Media voorbereiden…',
+    sharing: 'Delen…',
+    copyImage: 'Afbeelding kopiëren',
+    button: {
+      native: 'Delen',
+      linkedin: 'Delen op LinkedIn',
+    },
+    status: {
+      nativeShared: 'Gedeeld.',
+      nativeSharedCopied: 'Gedeeld. De tekst is ook gekopieerd: ontbreekt hij in je post, plak hem dan.',
+      linkedinOpenedCopied: 'LinkedIn is geopend en de tekst is gekopieerd. Plak hem in je post (Ctrl+V of lang indrukken).',
+      linkedinOpenedNotCopied: 'LinkedIn is geopend, maar de tekst kon niet gekopieerd worden. Selecteer de tekst hierboven en kopieer hem zelf.',
+      imageCopied: 'Afbeelding gekopieerd. Plak ze in je LinkedIn-post.',
+      imageCopyFailed: 'De afbeelding kon niet gekopieerd worden.',
+      shareFailed: 'Delen is mislukt. Probeer opnieuw.',
+    },
+    hint: {
+      native: 'Het deelmenu van je toestel opent met de tekst en media. Kies LinkedIn. De tekst wordt ook gekopieerd, voor het geval de app hem niet invult.',
+      linkedinImage: 'LinkedIn opent met een link naar deze post en een voorbeeldafbeelding. De tekst is gekopieerd; plak hem in je post. Met “Afbeelding kopiëren” plak je de afbeelding zelf.',
+      linkedinMedia: 'LinkedIn opent met een link naar deze post en de tekst is gekopieerd; plak hem in je post. De video of de volledige carrousel kan van hieruit niet bijgevoegd worden.',
+      desktopPhone: 'Om de media zelf te delen, open je deze pagina op je smartphone.',
+    },
   },
   language: {
     label: 'Taal',

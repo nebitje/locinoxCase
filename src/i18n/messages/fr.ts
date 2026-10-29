@@ -61,7 +61,34 @@ export default {
   },
   employee: {
     title: 'Publications à partager',
-    placeholder: 'Les publications prêtes à l’emploi apparaîtront bientôt ici.',
+    loadFailed: 'Impossible de charger les publications.',
+    empty: 'Aucune publication disponible pour le moment.',
+    open: 'Ouvrir et partager',
+    notFound: 'Cette publication n’existe pas ou a été supprimée.',
+  },
+  share: {
+    preparing: 'Préparation des médias…',
+    sharing: 'Partage…',
+    copyImage: 'Copier l’image',
+    button: {
+      native: 'Partager',
+      linkedin: 'Partager sur LinkedIn',
+    },
+    status: {
+      nativeShared: 'Partagé.',
+      nativeSharedCopied: 'Partagé. Le texte a aussi été copié : s’il manque dans votre publication, collez-le.',
+      linkedinOpenedCopied: 'LinkedIn est ouvert et le texte est copié. Collez-le dans votre publication (Ctrl+V ou appui long).',
+      linkedinOpenedNotCopied: 'LinkedIn est ouvert, mais le texte n’a pas pu être copié. Sélectionnez le texte ci-dessus et copiez-le vous-même.',
+      imageCopied: 'Image copiée. Collez-la dans votre publication LinkedIn.',
+      imageCopyFailed: 'L’image n’a pas pu être copiée.',
+      shareFailed: 'Le partage a échoué. Veuillez réessayer.',
+    },
+    hint: {
+      native: 'Le menu de partage de votre appareil s’ouvre avec le texte et les médias. Choisissez LinkedIn. Le texte est aussi copié au cas où l’application ne le remplirait pas.',
+      linkedinImage: 'LinkedIn s’ouvre avec un lien vers cette publication et une image d’aperçu. Le texte est copié ; collez-le dans votre publication. Utilisez « Copier l’image » pour coller l’image elle-même.',
+      linkedinMedia: 'LinkedIn s’ouvre avec un lien vers cette publication et le texte est copié ; collez-le dans votre publication. La vidéo ou le carrousel complet ne peuvent pas être joints d’ici.',
+      desktopPhone: 'Pour partager les médias eux-mêmes, ouvrez cette page sur votre téléphone.',
+    },
   },
   language: {
     label: 'Langue',
