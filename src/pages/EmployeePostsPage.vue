@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import PostCard from '../components/PostCard.vue'
-import { listCampaigns, type Campaign } from '../lib/campaigns'
+import PostCard from '@/features/campaigns/components/PostCard.vue'
+import { listCampaigns, type Campaign } from '@/features/campaigns/api'
 
 const { t } = useI18n()
 

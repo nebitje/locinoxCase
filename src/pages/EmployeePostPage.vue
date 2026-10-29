@@ -2,11 +2,11 @@
 import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
-import { useAuth } from '../composables/useAuth'
-import { useSharePost } from '../composables/useSharePost'
-import type { AppLocale } from '../i18n/locales'
-import { getCampaign, type Campaign } from '../lib/campaigns'
-import { availableLanguages, pickVariants } from '../lib/variants'
+import { useAuth } from '@/features/auth/useAuth'
+import { useSharePost } from '@/features/sharing/useSharePost'
+import type { AppLocale } from '@/shared/i18n/locales'
+import { getCampaign, type Campaign } from '@/features/campaigns/api'
+import { availableLanguages, pickVariants } from '@/features/campaigns/variants'
 
 const { t } = useI18n()
 const route = useRoute()

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { initAuth, useAuth, type UserRole } from '../composables/useAuth'
+import { initAuth, useAuth, type UserRole } from '@/features/auth/useAuth'
 import { homePathForRole, resolveRedirect } from './guard'
 
 declare module 'vue-router' {
@@ -11,30 +11,30 @@ declare module 'vue-router' {
 export const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', name: 'root', component: () => import('../views/LoginView.vue') },
-    { path: '/login', name: 'login', component: () => import('../views/LoginView.vue') },
+    { path: '/', name: 'root', component: () => import('@/pages/LoginPage.vue') },
+    { path: '/login', name: 'login', component: () => import('@/pages/LoginPage.vue') },
     {
       path: '/admin',
       name: 'admin-home',
-      component: () => import('../views/AdminHomeView.vue'),
+      component: () => import('@/pages/AdminPostsPage.vue'),
       meta: { roles: ['admin'] },
     },
     {
       path: '/admin/posts/new',
       name: 'admin-post-new',
-      component: () => import('../views/AdminPostNewView.vue'),
+      component: () => import('@/pages/AdminPostNewPage.vue'),
       meta: { roles: ['admin'] },
     },
     {
       path: '/posts',
       name: 'employee-home',
-      component: () => import('../views/EmployeeHomeView.vue'),
+      component: () => import('@/pages/EmployeePostsPage.vue'),
       meta: { roles: ['employee'] },
     },
     {
       path: '/posts/:id',
       name: 'employee-post',
-      component: () => import('../views/EmployeePostView.vue'),
+      component: () => import('@/pages/EmployeePostPage.vue'),
       meta: { roles: ['employee'] },
     },
     { path: '/:pathMatch(.*)*', redirect: '/' },

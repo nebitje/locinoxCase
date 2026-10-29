@@ -1,4 +1,4 @@
-import { SUPPORTED_LOCALES, type AppLocale } from '../i18n/locales'
+import { SUPPORTED_LOCALES, type AppLocale } from '@/shared/i18n/locales'
 
 export const MAX_COPY_LENGTH = 3000
 export const MAX_VARIANTS_PER_LANGUAGE = 5

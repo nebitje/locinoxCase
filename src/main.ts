@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
-import { initAuth } from './composables/useAuth'
-import { i18n } from './i18n'
-import { router } from './router'
+import '@/app/style.css'
+import App from '@/app/App.vue'
+import { initAuth } from '@/features/auth/useAuth'
+import { i18n } from '@/shared/i18n'
+import { router } from '@/app/router'
 
 document.documentElement.lang = i18n.global.locale.value
 

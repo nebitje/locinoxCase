@@ -2,9 +2,9 @@
 import { computed, onBeforeUnmount, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { useAuth } from '../composables/useAuth'
-import { SUPPORTED_LOCALES, type AppLocale } from '../i18n/locales'
-import { createCampaign } from '../lib/campaigns'
+import { useAuth } from '@/features/auth/useAuth'
+import { SUPPORTED_LOCALES, type AppLocale } from '@/shared/i18n/locales'
+import { createCampaign } from '@/features/campaigns/api'
 import {
   MAX_COPY_LENGTH,
   MAX_VARIANTS_PER_LANGUAGE,
@@ -12,7 +12,7 @@ import {
   emptyCopyInput,
   toVariants,
   validateVariants,
-} from '../lib/variants'
+} from '@/features/campaigns/variants'
 import {
   ACCEPTED_TYPES,
   MAX_CAROUSEL_SLIDES,
@@ -20,7 +20,7 @@ import {
   MAX_VIDEO_BYTES,
   kindOf,
   validateMedia,
-} from '../lib/media-validation'
+} from '@/features/campaigns/media-validation'
 
 interface Item {
   id: string

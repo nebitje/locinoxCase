@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { useAuth } from '../composables/useAuth'
-import { homePathForRole } from '../router/guard'
+import { useAuth } from '@/features/auth/useAuth'
+import { homePathForRole } from '@/app/router/guard'
 
 const { t } = useI18n()
 const router = useRouter()

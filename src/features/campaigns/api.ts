@@ -1,5 +1,5 @@
-import { supabase } from './supabase'
-import { isAppLocale } from '../i18n/locales'
+import { supabase } from '@/shared/supabase'
+import { isAppLocale } from '@/shared/i18n/locales'
 import { extensionFor, kindOf, type PostFormat } from './media-validation'
 import type { Variant } from './variants'
 

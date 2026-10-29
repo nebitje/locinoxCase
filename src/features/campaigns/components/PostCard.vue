@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { isAppLocale } from '../i18n/locales'
-import type { Campaign } from '../lib/campaigns'
-import { pickVariants } from '../lib/variants'
+import { isAppLocale } from '@/shared/i18n/locales'
+import type { Campaign } from '@/features/campaigns/api'
+import { pickVariants } from '@/features/campaigns/variants'
 
 const props = defineProps<{ campaign: Campaign }>()
 

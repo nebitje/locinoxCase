@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { useAuth } from './composables/useAuth'
-import { setLocale } from './i18n'
-import { SUPPORTED_LOCALES, isAppLocale } from './i18n/locales'
+import { useAuth } from '@/features/auth/useAuth'
+import { setLocale } from '@/shared/i18n'
+import { SUPPORTED_LOCALES, isAppLocale } from '@/shared/i18n/locales'
 
 const { t, locale } = useI18n()
 const router = useRouter()

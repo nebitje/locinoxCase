@@ -1,6 +1,6 @@
 import { computed, ref, watch, type Ref } from 'vue'
-import { recordShare, type Campaign } from '../lib/campaigns'
-import type { Variant } from '../lib/variants'
+import { recordShare, type Campaign } from '@/features/campaigns/api'
+import type { Variant } from '@/features/campaigns/variants'
 import {
   choosePrimaryMethod,
   fileNameFor,
@@ -9,7 +9,7 @@ import {
   publicPostUrl,
   resolvePublicOrigin,
   type ShareMethod,
-} from '../lib/share'
+} from './share'
 
 /** Sleutels onder `share.status` in de vertalingen. */
 export type ShareStatus =

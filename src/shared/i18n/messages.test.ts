@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { SUPPORTED_LOCALES } from './locales'
-import de from './messages/de'
-import en from './messages/en'
-import fr from './messages/fr'
-import nl from './messages/nl'
+import de from '@/shared/i18n/messages/de'
+import en from '@/shared/i18n/messages/en'
+import fr from '@/shared/i18n/messages/fr'
+import nl from '@/shared/i18n/messages/nl'
 
 const messages = { en, fr, de, nl }
 

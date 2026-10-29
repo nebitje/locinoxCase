@@ -3,7 +3,8 @@
 import { createClient } from '@supabase/supabase-js'
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { extname, join } from 'node:path'
-import { validateMedia } from '../src/lib/media-validation.ts'
+// media-validation.ts mag geen alias-imports bevatten: Node leest dit bestand rechtstreeks.
+import { validateMedia } from '../src/features/campaigns/media-validation.ts'
 import { demoPosts, type DemoLanguage } from './demo-posts.ts'
 
 const ASSET_DIR = join(import.meta.dirname, 'demo-assets')

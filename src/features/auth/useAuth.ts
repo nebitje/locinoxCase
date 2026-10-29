@@ -1,7 +1,7 @@
 import { computed, readonly, ref } from 'vue'
-import { setLocale } from '../i18n'
-import { isAppLocale, type AppLocale } from '../i18n/locales'
-import { supabase } from '../lib/supabase'
+import { setLocale } from '@/shared/i18n'
+import { isAppLocale, type AppLocale } from '@/shared/i18n/locales'
+import { supabase } from '@/shared/supabase'
 
 export type UserRole = 'admin' | 'employee'
 
