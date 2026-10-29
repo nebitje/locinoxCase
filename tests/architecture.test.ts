@@ -97,6 +97,16 @@ describe('architectuur', () => {
     expect(violations).toEqual([])
   })
 
+  it('gebruikt enkel kleurtokens en geen losse Tailwind-kleuren, zodat de donkere modus overal werkt', () => {
+    const loose =
+      /\b(?:[a-z-]+:)*(?:bg|text|border|ring|fill|stroke|divide|outline|from|via|to)-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d{2,3}\b|\bbg-white\b/
+    const violations = sources
+      .filter((file) => file.endsWith('.vue'))
+      .filter((file) => loose.test(readFileSync(file, 'utf8')))
+      .map((file) => relative(SRC, file))
+    expect(violations).toEqual([])
+  })
+
   it('houdt media-validation vrij van imports, want Node-scripts lezen dat bestand rechtstreeks', () => {
     expect(importsOf(join(SRC, 'features/campaigns/media-validation.ts'))).toEqual([])
   })
