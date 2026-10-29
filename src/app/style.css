@@ -1,5 +1,292 @@
 @import 'tailwindcss';
 
-body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+/*
+ * Open Sans (variabel), enkel de Latijnse tekensets: genoeg voor EN, FR, DE en NL. Het pakket
+ * @fontsource-variable/open-sans levert alle schriften mee; door enkel deze twee bestanden te verwijzen
+ * blijft de download klein. Voeg een subset toe als de app een ander schrift nodig heeft.
+ */
+@font-face {
+  font-family: 'Open Sans Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 800;
+  src: url('@fontsource-variable/open-sans/files/open-sans-latin-ext-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Open Sans Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 800;
+  src: url('@fontsource-variable/open-sans/files/open-sans-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Donkere modus: de klasse `dark` op <html> (zie shared/theme.ts), niet enkel de systeemvoorkeur. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design tokens. Alle kleuren in de app komen hieruit; wie de huisstijl wil aanpassen, wijzigt enkel dit blok.
+ * Palet afgeleid van locinox.com: oranje #FF5000, wit, gebroken wit #FAF9F8, lichtgrijs #EDEDED, grijze tekst,
+ * en het lettertype Open Sans. De donkere varianten zijn eigen ontwerp: de site kent geen donkere modus.
+ */
+:root {
+  --page: #faf9f8;
+  --surface: #ffffff;
+  --surface-muted: #ededed;
+  --line: #d9d7d4;
+
+  --ink: #1a1a1a;
+  --ink-muted: #585858;
+  --ink-subtle: #707070;
+
+  --brand: #ff5000;
+  --brand-hover: #e04600;
+  /* Oranje als tekstkleur op een lichte ondergrond: donkerder, zodat het contrast voldoende blijft (±4,9:1). */
+  --brand-text: #d94400;
+  /* Tekst op een oranje vlak. Wit volgt locinox.com maar haalt ±3,3:1; zwart (#1a1a1a) haalt ±6:1. */
+  --on-brand: #ffffff;
+
+  --danger: #b42318;
+  --danger-soft: #fef3f2;
+  --success: #166534;
+  --success-soft: #f0fdf4;
+  --warning: #92400e;
+  --warning-soft: #fffbeb;
+
+  color-scheme: light;
+}
+
+.dark {
+  --page: #121212;
+  --surface: #1c1c1c;
+  --surface-muted: #2a2a2a;
+  --line: #3a3a3a;
+
+  --ink: #f4f4f4;
+  --ink-muted: #b9b9b9;
+  --ink-subtle: #929292;
+
+  --brand: #ff5000;
+  --brand-hover: #ff6a26;
+  --brand-text: #ff8a55;
+  --on-brand: #ffffff;
+
+  --danger: #ffb4aa;
+  --danger-soft: #3a1b18;
+  --success: #8fe0a8;
+  --success-soft: #12301d;
+  --warning: #f2c46b;
+  --warning-soft: #3a2c0f;
+
+  color-scheme: dark;
+}
+
+/* Maakt de tokens beschikbaar als Tailwind-klassen: bg-page, bg-surface, text-ink, border-line, bg-brand, … */
+@theme inline {
+  --font-sans: 'Open Sans Variable', 'Open Sans', 'Segoe UI', Arial, sans-serif;
+
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-text: var(--brand-text);
+  --color-on-brand: var(--on-brand);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+}
+
+/* Beweging. Alles hieronder wordt uitgezet bij `prefers-reduced-motion` (onderaan dit bestand). */
+@theme {
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-fade-in: fade-in 0.5s ease both;
+  --animate-pop: pop 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  --animate-slide-in: slide-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-grow-x: grow-x 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both;
+
+  @keyframes grow-x {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.92) translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(-14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-page font-sans text-ink antialiased;
+  }
+
+  /* Achtergrond: een warme gloed in de merkkleur en een fijn puntenraster, vast achter de inhoud. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(60rem 38rem at 88% -12%, color-mix(in srgb, var(--brand) 15%, transparent), transparent 62%),
+      radial-gradient(44rem 30rem at -8% 108%, color-mix(in srgb, var(--brand) 9%, transparent), transparent 60%),
+      radial-gradient(color-mix(in srgb, var(--ink) 10%, transparent) 1px, transparent 1.2px);
+    background-size:
+      auto,
+      auto,
+      24px 24px;
+    mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+  }
+
+  /* Locinox gebruikt koppen in hoofdletters. */
+  h1 {
+    @apply font-bold uppercase tracking-wide;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--brand) 35%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Laadskelet: een zacht glanzende balk in plaats van "Laden…". */
+  .skeleton {
+    background: linear-gradient(
+      100deg,
+      var(--surface-muted) 30%,
+      color-mix(in srgb, var(--surface) 55%, var(--surface-muted)) 50%,
+      var(--surface-muted) 70%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+
+  /* Glanslaag die bij hover over een knop schuift. */
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(110deg, transparent 32%, rgb(255 255 255 / 0.38) 50%, transparent 68%);
+    transform: translateX(-130%);
+    transition: transform 0.75s ease;
+  }
+  .btn-shine:hover::after {
+    transform: translateX(130%);
+  }
+
+  /* Overgang tussen pagina's (Vue <Transition name="page">). */
+  .page-enter-active,
+  .page-leave-active {
+    transition:
+      opacity 0.28s ease,
+      transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .page-enter-from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .page-leave-to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Thema-wissel met een cirkelvormige onthulling (zie shared/theme.ts): de browser maakt een momentopname van oud en nieuw. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

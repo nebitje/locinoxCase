@@ -9,6 +9,8 @@ export default {
     back: 'Retour',
   },
   login: {
+    eyebrow: "Ambassadeurs internes",
+    hero: "Partagez ce qui compte",
     title: 'Connexion',
     email: 'E-mail',
     password: 'Mot de passe',
@@ -56,6 +58,7 @@ export default {
     saveFailed: 'La publication n’a pas pu être enregistrée. Rien n’a été créé, réessayez.',
   },
   media: {
+    slide: "Aller à la diapositive {n}",
     help: 'Une image (max {maxImage} Mo), une vidéo (max {maxVideo} Mo) ou 2 à {maxSlides} images en carrousel. JPG, PNG, WebP, MP4, WebM ou MOV.',
     detected: 'Format : {format}',
     remove: 'Retirer',
@@ -105,6 +108,10 @@ export default {
       linkedinMedia: 'LinkedIn s’ouvre avec un lien vers cette publication et le texte est copié ; collez-le dans votre publication. La vidéo ou le carrousel complet ne peuvent pas être joints d’ici.',
       desktopPhone: 'Pour partager les médias eux-mêmes, ouvrez cette page sur votre téléphone.',
     },
+  },
+  theme: {
+    toDark: "Passer au mode sombre",
+    toLight: "Passer au mode clair",
   },
   language: {
     label: 'Langue',

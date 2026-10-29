@@ -37,6 +37,8 @@ export const router = createRouter({
       component: () => import('@/pages/EmployeePostPage.vue'),
       meta: { roles: ['employee'] },
     },
+    // Ontwikkelaarspagina met de design tokens en bouwstenen; publiek en zonder gegevens van gebruikers.
+    { path: '/styleguide', name: 'styleguide', component: () => import('@/pages/StyleguidePage.vue') },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
 })

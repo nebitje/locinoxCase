@@ -9,6 +9,8 @@ export default {
     back: 'Terug',
   },
   login: {
+    eyebrow: "Employee advocacy",
+    hero: "Deel wat telt",
     title: 'Aanmelden',
     email: 'E-mail',
     password: 'Wachtwoord',
@@ -56,6 +58,7 @@ export default {
     saveFailed: 'De post kon niet opgeslagen worden. Er is niets aangemaakt, probeer opnieuw.',
   },
   media: {
+    slide: "Ga naar dia {n}",
     help: 'Eén afbeelding (max. {maxImage} MB), één video (max. {maxVideo} MB) of 2 tot {maxSlides} afbeeldingen als carrousel. JPG, PNG, WebP, MP4, WebM of MOV.',
     detected: 'Formaat: {format}',
     remove: 'Verwijderen',
@@ -105,6 +108,10 @@ export default {
       linkedinMedia: 'LinkedIn opent met een link naar deze post en de tekst is gekopieerd; plak hem in je post. De video of de volledige carrousel kan van hieruit niet bijgevoegd worden.',
       desktopPhone: 'Om de media zelf te delen, open je deze pagina op je smartphone.',
     },
+  },
+  theme: {
+    toDark: "Overschakelen naar donkere modus",
+    toLight: "Overschakelen naar lichte modus",
   },
   language: {
     label: 'Taal',

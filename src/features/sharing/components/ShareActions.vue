@@ -37,8 +37,8 @@ const { t } = useI18n()
 
     <BaseAlert v-if="status" :tone="status.tone">{{ t(`share.status.${status.key}`) }}</BaseAlert>
 
-    <p v-if="method === 'native'" class="text-xs text-slate-500">{{ t('share.hint.native') }}</p>
-    <p v-else-if="!preparing" class="text-xs text-slate-500">
+    <p v-if="method === 'native'" class="text-xs text-ink-subtle">{{ t('share.hint.native') }}</p>
+    <p v-else-if="!preparing" class="text-xs text-ink-subtle">
       {{ format === 'image' ? t('share.hint.linkedinImage') : t('share.hint.linkedinMedia') }}
       <template v-if="!isMobile"> {{ t('share.hint.desktopPhone') }}</template>
     </p>

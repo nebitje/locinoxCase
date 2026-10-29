@@ -25,7 +25,7 @@ const languageOptions = computed(() => props.languages.map((code) => ({ value: c
 
 <template>
   <div v-if="languages.length > 1" class="mt-4 flex flex-wrap items-center gap-2 text-sm">
-    <span class="text-slate-600">{{ t('employee.postLanguage') }}</span>
+    <span class="text-ink-muted">{{ t('employee.postLanguage') }}</span>
     <SegmentedControl
       :model-value="selection.language"
       :options="languageOptions"
@@ -38,19 +38,19 @@ const languageOptions = computed(() => props.languages.map((code) => ({ value: c
   </BaseAlert>
 
   <fieldset v-if="selection.variants.length > 1" class="mt-3 space-y-2">
-    <legend class="text-sm text-slate-600">{{ t('employee.chooseVariant') }}</legend>
+    <legend class="text-sm text-ink-muted">{{ t('employee.chooseVariant') }}</legend>
     <label
       v-for="item in selection.variants"
       :key="item.variantNo"
-      :class="selected?.variantNo === item.variantNo ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-300'"
-      class="flex cursor-pointer gap-3 rounded border bg-white p-3"
+      :class="selected?.variantNo === item.variantNo ? 'border-brand ring-1 ring-brand' : 'border-line'"
+      class="flex cursor-pointer gap-3 rounded border bg-surface p-3"
     >
       <input v-model="variantNo" type="radio" name="variant" :value="item.variantNo" class="mt-1">
       <span>
-        <span class="block text-xs font-medium text-slate-500">{{ t('employee.variant', { n: item.variantNo }) }}</span>
-        <span class="block whitespace-pre-line text-slate-700">{{ item.copy }}</span>
+        <span class="block text-xs font-medium text-ink-subtle">{{ t('employee.variant', { n: item.variantNo }) }}</span>
+        <span class="block whitespace-pre-line text-ink">{{ item.copy }}</span>
       </span>
     </label>
   </fieldset>
-  <p v-else class="mt-3 whitespace-pre-line text-slate-700">{{ selected?.copy }}</p>
+  <p v-else class="mt-3 whitespace-pre-line text-ink">{{ selected?.copy }}</p>
 </template>

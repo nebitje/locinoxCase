@@ -9,6 +9,8 @@ export default {
     back: 'Zurück',
   },
   login: {
+    eyebrow: "Employee Advocacy",
+    hero: "Teile, was zählt",
     title: 'Anmelden',
     email: 'E-Mail',
     password: 'Passwort',
@@ -56,6 +58,7 @@ export default {
     saveFailed: 'Der Beitrag konnte nicht gespeichert werden. Es wurde nichts erstellt, bitte erneut versuchen.',
   },
   media: {
+    slide: "Zu Folie {n}",
     help: 'Ein Bild (max. {maxImage} MB), ein Video (max. {maxVideo} MB) oder 2 bis {maxSlides} Bilder als Karussell. JPG, PNG, WebP, MP4, WebM oder MOV.',
     detected: 'Format: {format}',
     remove: 'Entfernen',
@@ -105,6 +108,10 @@ export default {
       linkedinMedia: 'LinkedIn öffnet sich mit einem Link zu diesem Beitrag und der Text ist kopiert; füge ihn in deinen Beitrag ein. Das Video oder das ganze Karussell kann von hier nicht angehängt werden.',
       desktopPhone: 'Um die Medien selbst zu teilen, öffne diese Seite auf deinem Smartphone.',
     },
+  },
+  theme: {
+    toDark: "Zum dunklen Modus wechseln",
+    toLight: "Zum hellen Modus wechseln",
   },
   language: {
     label: 'Sprache',

@@ -1,5 +1,5 @@
 <template>
-  <p role="status" class="text-sm text-slate-500">
+  <p role="status" class="text-sm text-ink-subtle">
     <slot />
   </p>
 </template>

@@ -35,7 +35,7 @@ async function onSubmit(post: NewCampaign) {
 
 <template>
   <PageLayout width="medium">
-    <BaseButton variant="link" to="/admin" class="text-slate-600">{{ t('common.back') }}</BaseButton>
+    <BaseButton variant="link" to="/admin" class="text-ink-muted">{{ t('common.back') }}</BaseButton>
     <h1 class="mt-2 text-2xl font-semibold">{{ t('admin.newPost') }}</h1>
     <div class="mt-6">
       <PostForm :submitting="submitting" :progress="progress" :failed="failed" @submit="onSubmit" />

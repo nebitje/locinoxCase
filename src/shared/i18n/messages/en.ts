@@ -9,6 +9,8 @@ export default {
     back: 'Back',
   },
   login: {
+    eyebrow: "Employee advocacy",
+    hero: "Share what matters",
     title: 'Sign in',
     email: 'Email',
     password: 'Password',
@@ -56,6 +58,7 @@ export default {
     saveFailed: 'The post could not be saved. Nothing was created, please try again.',
   },
   media: {
+    slide: "Go to slide {n}",
     help: 'One image (max {maxImage} MB), one video (max {maxVideo} MB) or 2 to {maxSlides} images as a carousel. JPG, PNG, WebP, MP4, WebM or MOV.',
     detected: 'Format: {format}',
     remove: 'Remove',
@@ -105,6 +108,10 @@ export default {
       linkedinMedia: 'LinkedIn opens with a link to this post and the text is copied; paste it into your post. The video or the full carousel cannot be attached from here.',
       desktopPhone: 'To share the media itself, open this page on your phone.',
     },
+  },
+  theme: {
+    toDark: "Switch to dark mode",
+    toLight: "Switch to light mode",
   },
   language: {
     label: 'Language',

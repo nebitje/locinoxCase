@@ -52,6 +52,13 @@ Buiten `src/`: `api/` (serverless functie voor de publieke postpagina), `supabas
 | een nieuwe taal in de interface | `shared/i18n/messages/<taal>.ts` en `SUPPORTED_LOCALES` |
 | een nieuwe databasetabel | migratie in `supabase/migrations/`, daarna `api.ts` van de feature |
 
+## Opmaak
+- Kleuren, lettertype en afrondingen zijn **design tokens** in `src/app/style.css`. Gebruik in componenten enkel de semantische klassen (`bg-surface`, `text-ink`, `border-line`, `bg-brand`, …) en geen losse Tailwind-kleuren zoals `slate-500`; dan werkt de donkere modus vanzelf.
+- Het thema (licht of donker) staat in `shared/theme.ts`; de wisselknop is `ui/molecules/ThemeToggle.vue`.
+- Beweging staat als `animate-*`-klassen en `@keyframes` in `src/app/style.css` en wordt uitgezet bij `prefers-reduced-motion`. Gebruik enkel `transform` en `opacity` voor animaties.
+- De route `/styleguide` (`pages/StyleguidePage.vue`) toont tokens en bouwstenen op voorbeelddata; voeg een nieuwe bouwsteen daar toe zodat het ontwerp zichtbaar en controleerbaar blijft.
+- Meer over de keuzes en het contrast: [`beslissingen.md`](beslissingen.md#opmaak-en-donkere-modus).
+
 ## Gegevens en rollen
 - De frontend praat rechtstreeks met Supabase (`shared/supabase.ts`); de rollen worden afgedwongen met Row Level Security in de database, niet in de frontend. De route-guard (`features/auth/guard.ts`) is enkel UX.
 - Eén serverless functie (`api/p.ts`) bouwt de publieke postpagina met Open Graph-tags voor de LinkedIn-preview. Ze gebruikt de service-role-sleutel enkel op de server.

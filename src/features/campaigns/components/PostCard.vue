@@ -6,7 +6,14 @@ import BaseBadge from '@/ui/atoms/BaseBadge.vue'
 import type { Campaign } from '../api'
 import { pickVariants } from '../variants'
 
-const props = defineProps<{ campaign: Campaign }>()
+const props = withDefaults(
+  defineProps<{
+    campaign: Campaign
+    /** Positie in de lijst; bepaalt hoe laat de kaart binnenkomt, zodat ze na elkaar verschijnen. */
+    index?: number
+  }>(),
+  { index: 0 },
+)
 
 const { t, locale } = useI18n()
 
@@ -18,12 +25,15 @@ const snippet = computed(() => {
 </script>
 
 <template>
-  <article class="flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white">
-    <div class="relative aspect-video bg-slate-100">
+  <article
+    class="group flex animate-fade-up flex-col overflow-hidden border border-line bg-surface shadow-sm transition duration-300 [animation-delay:calc(var(--i)*80ms)] hover:-translate-y-1 hover:border-brand/60 hover:shadow-xl hover:shadow-brand/10"
+    :style="{ '--i': index }"
+  >
+    <div class="relative aspect-video overflow-hidden bg-surface-muted">
       <video
         v-if="campaign.media[0]?.kind === 'video'"
         :src="campaign.media[0].url"
-        class="h-full w-full object-cover"
+        class="h-full w-full object-cover transition duration-700 group-hover:scale-105"
         muted
         playsinline
         preload="metadata"
@@ -32,18 +42,22 @@ const snippet = computed(() => {
         v-else-if="campaign.media[0]"
         :src="campaign.media[0].url"
         :alt="campaign.title"
-        class="h-full w-full object-cover"
+        class="h-full w-full object-cover transition duration-700 group-hover:scale-105"
         loading="lazy"
       >
-      <BaseBadge class="absolute left-2 top-2">
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent opacity-0 transition duration-500 group-hover:opacity-100"
+      />
+      <BaseBadge class="absolute left-3 top-3">
         {{ t(`format.${campaign.format}`) }}
         <template v-if="campaign.format === 'carousel'"> · {{ campaign.media.length }}</template>
       </BaseBadge>
     </div>
     <div class="flex flex-1 flex-col gap-2 p-4">
-      <h2 class="font-semibold">{{ campaign.title }}</h2>
-      <p class="line-clamp-3 whitespace-pre-line text-sm text-slate-600">{{ snippet }}</p>
-      <div class="mt-auto pt-2">
+      <h2 class="font-semibold transition-colors duration-300 group-hover:text-brand-text">{{ campaign.title }}</h2>
+      <p class="line-clamp-3 whitespace-pre-line text-sm text-ink-muted">{{ snippet }}</p>
+      <div class="mt-auto pt-3">
         <slot name="actions" />
       </div>
     </div>
