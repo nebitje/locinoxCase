@@ -134,6 +134,7 @@ Het project moet in één dag af. Loopt een feature uit tegenover de timebox van
 ## 7. Code-afspraken
 
 - Duidelijke, consistente structuur en naamgeving. Stel een conventie voor in het plan.
+- Volg de mappenstructuur en de regels uit `docs/architectuur.md` (lagen `app`, `pages`, `features`, `ui`, `shared`). Nieuwe herbruikbare UI komt in `ui/` (atoms, molecules, organisms, templates), domeincode in `features/<domein>/`, pagina's blijven dun. De test `tests/architecture.test.ts` bewaakt dit; pas bij een bewuste wijziging eerst de documentatie en de test aan.
 - Valideer alle input, zowel in de frontend als in de backend (verplichte velden, bestandstypes, maximale grootte van uploads).
 - Controleer de rol op de server, niet enkel in de frontend: een medewerker mag geen admin-acties kunnen uitvoeren.
 - Geef duidelijke feedback aan de gebruiker: laden, uploaden, gelukt, fouten, en wat er gekopieerd is bij het delen.
@@ -188,6 +189,7 @@ Geef ik tijdens het project een nieuwe instructie die blijvend moet gelden? **Vo
 |---|---|
 | 2026-10-29 | Geef de pull request description altijd in Markdown (in een codeblok, zodat ze 1-op-1 te kopiëren is). |
 | 2026-10-29 | Push zelf met `git push` (de IDE-koppeling met GitHub werkt). Probeer dat eerst; vraag de gebruiker enkel te pushen als het mislukt. Nog steeds enkel pushen nadat de gebruiker bevestigt dat de feature af is. |
+| 2026-10-29 | De code volgt de hybride structuur uit `docs/architectuur.md` (atomic design voor `ui/`, features per domein), bewaakt door `tests/architecture.test.ts`. Doel: overdraagbaar aan het team van Locinox. |
 
 ---
 
