@@ -75,6 +75,10 @@ De regels achter deze indeling staan in [`docs/architectuur.md`](docs/architectu
 - [`docs/uitleg.md`](docs/uitleg.md): uitgebreide versie van de uitleg, wat niet werkt en het logboek van wat AI deed
 - [`docs/demo.md`](docs/demo.md): script voor de korte demo
 
+## Wiki
+
+De documentatie staat ook in de [GitHub-wiki](https://github.com/nebitje/locinoxCase/wiki). De wiki is een gegenereerde kopie van `README.md` en `docs/`: pas de bronbestanden aan en voer `npm run wiki:sync` uit (of `npm run wiki:build` om enkel de pagina's in `.wiki-build/` te bekijken). Het script publiceert pas na `--push` en vraagt dat de wiki eerst op GitHub is aangezet.
+
 ## Deployment (Vercel)
 
 Zet in Vercel onder **Settings → Environment Variables**:
