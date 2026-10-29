@@ -42,8 +42,9 @@ npm run dev
 ### Supabase instellen (eenmalig)
 
 1. Open in het Supabase-dashboard **SQL Editor**, plak de inhoud van [`supabase/migrations/0001_profiles.sql`](supabase/migrations/0001_profiles.sql) en klik op **Run**.
-2. Zet de wachtwoorden in `.env` (`SEED_ADMIN_PASSWORD`, `SEED_EMPLOYEE_PASSWORD`).
-3. Maak de testaccounts aan met `npm run seed` (opnieuw uitvoeren mag, het script is idempotent).
+2. Voer daarna ook [`supabase/migrations/0002_campaigns.sql`](supabase/migrations/0002_campaigns.sql) uit (tabellen voor posts en de opslagbucket `campaign-media`).
+3. Zet de wachtwoorden in `.env` (`SEED_ADMIN_PASSWORD`, `SEED_EMPLOYEE_PASSWORD`).
+4. Maak de testaccounts aan met `npm run seed` (opnieuw uitvoeren mag, het script is idempotent).
 
 ## Structuur
 
