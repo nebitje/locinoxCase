@@ -9,6 +9,8 @@ export default {
     back: 'Retour',
   },
   login: {
+    eyebrow: "Ambassadeurs internes",
+    hero: "Partagez ce qui compte",
     title: 'Connexion',
     email: 'E-mail',
     password: 'Mot de passe',
@@ -56,6 +58,7 @@ export default {
     saveFailed: 'La publication n’a pas pu être enregistrée. Rien n’a été créé, réessayez.',
   },
   media: {
+    slide: "Aller à la diapositive {n}",
     help: 'Une image (max {maxImage} Mo), une vidéo (max {maxVideo} Mo) ou 2 à {maxSlides} images en carrousel. JPG, PNG, WebP, MP4, WebM ou MOV.',
     detected: 'Format : {format}',
     remove: 'Retirer',

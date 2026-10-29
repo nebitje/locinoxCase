@@ -48,7 +48,7 @@ onMounted(load)
 </script>
 
 <template>
-  <PageLayout width="medium">
+  <PageLayout>
     <BaseButton variant="link" to="/posts" class="text-ink-muted">{{ t('common.back') }}</BaseButton>
 
     <LoadingState v-if="loading" class="mt-6">{{ t('common.loading') }}</LoadingState>
@@ -61,36 +61,38 @@ onMounted(load)
     />
     <p v-else-if="!campaign" class="mt-6 text-ink-muted">{{ t('employee.notFound') }}</p>
 
-    <article v-else class="mt-4">
-      <PostMedia :campaign="campaign" />
+    <article v-else class="mt-6 grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
+      <PostMedia :campaign="campaign" class="animate-fade-up self-start lg:sticky lg:top-24" />
 
-      <p class="mt-3 text-xs font-medium uppercase tracking-wide text-ink-subtle">
-        {{ t(`format.${campaign.format}`) }}
-        <template v-if="campaign.format === 'carousel'"> · {{ campaign.media.length }}</template>
-      </p>
-      <h1 class="mt-1 text-2xl font-semibold">{{ campaign.title }}</h1>
+      <div class="animate-fade-up [animation-delay:120ms]">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-text">
+          {{ t(`format.${campaign.format}`) }}
+          <template v-if="campaign.format === 'carousel'"> · {{ campaign.media.length }}</template>
+        </p>
+        <h1 class="mt-2 text-3xl leading-tight">{{ campaign.title }}</h1>
 
-      <VariantSelector
-        v-model:variant-no="chosenVariantNo"
-        :languages="languages"
-        :selection="selection"
-        :wanted-language="wantedLanguage"
-        :selected="selectedVariant"
-        @update:language="chooseLanguage"
-      />
+        <VariantSelector
+          v-model:variant-no="chosenVariantNo"
+          :languages="languages"
+          :selection="selection"
+          :wanted-language="wantedLanguage"
+          :selected="selectedVariant"
+          @update:language="chooseLanguage"
+        />
 
-      <ShareActions
-        :method="method"
-        :format="campaign.format"
-        :ready="ready"
-        :preparing="preparing"
-        :busy="busy"
-        :is-mobile="isMobile"
-        :can-copy-image="canCopyImage"
-        :status="status"
-        @share="share"
-        @copy-image="copyImage"
-      />
+        <ShareActions
+          :method="method"
+          :format="campaign.format"
+          :ready="ready"
+          :preparing="preparing"
+          :busy="busy"
+          :is-mobile="isMobile"
+          :can-copy-image="canCopyImage"
+          :status="status"
+          @share="share"
+          @copy-image="copyImage"
+        />
+      </div>
     </article>
   </PageLayout>
 </template>

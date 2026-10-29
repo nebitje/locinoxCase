@@ -9,6 +9,8 @@ export default {
     back: 'Back',
   },
   login: {
+    eyebrow: "Employee advocacy",
+    hero: "Share what matters",
     title: 'Sign in',
     email: 'Email',
     password: 'Password',
@@ -56,6 +58,7 @@ export default {
     saveFailed: 'The post could not be saved. Nothing was created, please try again.',
   },
   media: {
+    slide: "Go to slide {n}",
     help: 'One image (max {maxImage} MB), one video (max {maxVideo} MB) or 2 to {maxSlides} images as a carousel. JPG, PNG, WebP, MP4, WebM or MOV.',
     detected: 'Format: {format}',
     remove: 'Remove',
