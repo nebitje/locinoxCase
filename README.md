@@ -31,12 +31,6 @@ cp .env.example .env   # vul de waarden in
 npm run dev
 ```
 
-### Supabase instellen (eenmalig)
-
-1. Open in het Supabase-dashboard **SQL Editor**, plak de inhoud van [`supabase/migrations/0001_profiles.sql`](supabase/migrations/0001_profiles.sql) en klik op **Run**.
-2. Zet de wachtwoorden in `.env` (`SEED_ADMIN_PASSWORD`, `SEED_EMPLOYEE_PASSWORD`).
-3. Maak de testaccounts aan met `npm run seed` (opnieuw uitvoeren mag, het script is idempotent).
-
 | Script | Doel |
 |---|---|
 | `npm run dev` | Ontwikkelserver |
@@ -44,6 +38,12 @@ npm run dev
 | `npm run lint` | ESLint |
 | `npm test` | Vitest |
 | `npm run seed` | Testaccounts aanmaken in Supabase |
+
+### Supabase instellen (eenmalig)
+
+1. Open in het Supabase-dashboard **SQL Editor**, plak de inhoud van [`supabase/migrations/0001_profiles.sql`](supabase/migrations/0001_profiles.sql) en klik op **Run**.
+2. Zet de wachtwoorden in `.env` (`SEED_ADMIN_PASSWORD`, `SEED_EMPLOYEE_PASSWORD`).
+3. Maak de testaccounts aan met `npm run seed` (opnieuw uitvoeren mag, het script is idempotent).
 
 ## Structuur
 
@@ -53,10 +53,10 @@ src/
   components/    herbruikbare componenten
   composables/   gedeelde logica (Composition API)
   lib/           clients en helpers (Supabase, delen)
-scripts/         seedscript voor testaccounts
-supabase/        SQL-migraties
   router/        routes en guards
   i18n/          interfacevertalingen (EN, FR, DE, NL)
+scripts/         seedscript voor testaccounts
+supabase/        SQL-migraties
 docs/            opdracht, beslissingen, onderzoek, uitleg, demo
 ```
 
