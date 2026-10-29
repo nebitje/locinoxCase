@@ -68,6 +68,18 @@ De medewerker moet nergens iets downloaden. De bestanden worden op mobiel vooraf
 
 **Registratie van shares:** elke share wordt best-effort in de tabel `shares` bewaard (basis voor latere statistieken). Een mislukte registratie blokkeert het delen niet. Een share is "een klik op delen"; of de medewerker effectief gepost heeft, weten we niet (de deel-URL geeft geen terugkoppeling).
 
+## Meerdere talen en varianten (eigen uitbreiding)
+
+- **Keuze van de uitbreiding:** talen en varianten, omdat het de kernflow direct versterkt (de juiste tekst voor de juiste medewerker) en haalbaar is in één dag. Boostcampagnes en het dashboard zijn niet gebouwd.
+- **Schema ongewijzigd:** `campaign_variants` had al taal en variantnummer; de uitbreiding is enkel interface en logica. Alle logica staat in `src/lib/variants.ts` met tests.
+- **Admin:** per post een tab per taal (EN, FR, DE, NL) met 1 tot 5 varianten. EN, FR en DE zijn verplicht (zoals de opdracht vraagt); NL is optioneel. Lege teksten worden genegeerd en varianten per taal doorlopend genummerd.
+- **Medewerker:** ziet standaard de taal van zijn profiel en kan wisselen naar elke taal waarin de post bestaat. Bij meerdere varianten kiest hij welke hij deelt; de gekozen tekst gaat naar het klembord of het deelvenster.
+- **Terugval:** ontbreekt de gevraagde taal (bijvoorbeeld bij posts van vóór deze uitbreiding, die enkel Engels hebben), dan toont de app het Engels met een duidelijke melding, en anders de eerste beschikbare taal.
+- **Preview in de juiste taal:** de deellink bevat `?lang=<taal>`, zodat de Open Graph-pagina de tekst in die taal toont. Een ongeldige taal valt terug op het Engels. De afbeelding en titel zijn niet vertaald: de titel is één voor alle talen.
+- **Registratie:** `shares` bewaart de gekozen taal en variant (migratie `0004`).
+- **Niet gebouwd:** een vertaling per titel, automatische vertaling met AI, een taal-specifiek beeld, posts achteraf bewerken.
+- **Interfacetaal en posttaal zijn los van elkaar:** de interface volgt de taalkiezer bovenaan, de posttaal volgt het profiel van de medewerker en kan per post gewijzigd worden.
+
 ## Bewust niet gebouwd
 
 - Boostcampagnes, admin-dashboard en externe statistieken: alleen onderzocht, tenzij er tijd overblijft.
