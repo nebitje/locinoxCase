@@ -1,0 +1,325 @@
+<!doctype html>
+<!--
+  Bron van docs/uitleg.pdf. Opnieuw maken met: npm run pdf:uitleg
+  De kleuren zijn dezelfde tokens als in src/app/style.css; het lettertype is Open Sans uit node_modules.
+-->
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <title>Uitleg bij het prototype – Locinox Advocacy</title>
+    <style>
+      @font-face {
+        font-family: 'Open Sans Variable';
+        font-weight: 300 800;
+        src: url('../../node_modules/@fontsource-variable/open-sans/files/open-sans-latin-ext-wght-normal.woff2') format('woff2-variations');
+        unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      @font-face {
+        font-family: 'Open Sans Variable';
+        font-weight: 300 800;
+        src: url('../../node_modules/@fontsource-variable/open-sans/files/open-sans-latin-wght-normal.woff2') format('woff2-variations');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+
+      :root {
+        --page: #faf9f8;
+        --surface: #ffffff;
+        --line: #d9d7d4;
+        --ink: #1a1a1a;
+        --ink-muted: #585858;
+        --ink-subtle: #707070;
+        --brand: #ff5000;
+        --brand-text: #d94400;
+        --on-brand: #ffffff;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      html,
+      body {
+        margin: 0;
+        background: var(--page);
+        color: var(--ink);
+        font-family: 'Open Sans Variable', 'Open Sans', 'Segoe UI', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.55;
+      }
+
+      .sheet {
+        position: relative;
+        width: 210mm;
+        height: 297mm;
+        padding: 0 16mm;
+        overflow: hidden;
+        background:
+          radial-gradient(150mm 90mm at 92% -6%, rgb(255 80 0 / 0.16), transparent 62%),
+          radial-gradient(110mm 80mm at -8% 104%, rgb(255 80 0 / 0.09), transparent 60%),
+          var(--page);
+      }
+
+      /* fijn puntenraster, zoals op de site */
+      .sheet::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgb(26 26 26 / 0.11) 0.6px, transparent 0.9px);
+        background-size: 6.4mm 6.4mm;
+        mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 85%);
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 85%);
+      }
+
+      .sheet > :not(.accent, footer) {
+        position: relative;
+      }
+
+      .accent {
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 2.2mm;
+        background: var(--brand);
+      }
+
+      header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding-top: 14mm;
+      }
+
+      .wordmark {
+        display: flex;
+        align-items: center;
+        gap: 2.6mm;
+        font-size: 10pt;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .wordmark svg {
+        width: 8mm;
+        height: 8mm;
+      }
+
+      .eyebrow {
+        margin: 11mm 0 0;
+        color: var(--brand-text);
+        font-size: 8pt;
+        font-weight: 600;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 2mm 0 0;
+        font-size: 29pt;
+        font-weight: 700;
+        line-height: 1.08;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+      .rule {
+        width: 17mm;
+        height: 1.1mm;
+        margin: 4mm 0 0;
+        background: var(--brand);
+      }
+      .lead {
+        max-width: 112mm;
+        margin: 4.5mm 0 0;
+        color: var(--ink-muted);
+        font-size: 10.6pt;
+      }
+
+      .gate {
+        width: 62mm;
+        margin-top: 1mm;
+        color: var(--ink);
+      }
+
+      .facts {
+        display: flex;
+        gap: 3mm;
+        margin: 8mm 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .facts li {
+        padding: 1.6mm 4mm;
+        border: 0.3mm solid var(--line);
+        border-radius: 999px;
+        background: var(--surface);
+        font-size: 8pt;
+        font-weight: 600;
+      }
+      .facts b {
+        color: var(--brand-text);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6mm 9mm;
+        margin-top: 9mm;
+      }
+      section {
+        break-inside: avoid;
+      }
+      section h2 {
+        display: flex;
+        align-items: baseline;
+        gap: 2.4mm;
+        margin: 0 0 1.6mm;
+        padding-bottom: 1.6mm;
+        border-bottom: 0.3mm solid var(--line);
+        font-size: 8.6pt;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      section h2 span {
+        color: var(--brand-text);
+        font-size: 8pt;
+      }
+      section p,
+      section ul {
+        margin: 0;
+        color: var(--ink-muted);
+      }
+      section ul {
+        padding-left: 4.2mm;
+      }
+      section li {
+        margin: 0.4mm 0;
+      }
+      section li::marker {
+        color: var(--brand);
+      }
+      strong {
+        color: var(--ink);
+        font-weight: 600;
+      }
+
+      footer {
+        position: absolute;
+        right: 16mm;
+        bottom: 12mm;
+        left: 16mm;
+        display: flex;
+        justify-content: space-between;
+        gap: 8mm;
+        padding-top: 3mm;
+        border-top: 0.3mm solid var(--line);
+        color: var(--ink-subtle);
+        font-size: 7.6pt;
+      }
+      footer b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sheet">
+      <span class="accent"></span>
+
+      <header>
+        <div>
+          <div class="wordmark">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <rect width="32" height="32" rx="8" fill="#ff5000" />
+              <path d="M9 24V9M23 24V9" stroke="#fff" stroke-width="3" stroke-linecap="round" />
+              <path d="M9 16h14" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 6" />
+            </svg>
+            Locinox Advocacy
+          </div>
+          <p class="eyebrow">AI-case · Locinox</p>
+          <h1>Uitleg bij het<br />prototype</h1>
+          <div class="rule"></div>
+          <p class="lead">Een employee advocacy platform, gebouwd met AI: een admin zet posts klaar, een medewerker deelt ze met zo weinig mogelijk klikken.</p>
+        </div>
+
+        <svg class="gate" viewBox="0 0 480 300" fill="none" aria-hidden="true">
+          <circle cx="240" cy="150" r="104" fill="#ff5000" opacity="0.13" />
+          <circle cx="240" cy="150" r="104" stroke="#ff5000" stroke-width="2" opacity="0.4" />
+          <path d="M10 262h460" stroke="#d9d7d4" stroke-width="3" stroke-linecap="round" />
+          <g stroke="#1a1a1a" stroke-width="4" stroke-linecap="round">
+            <rect x="44" y="96" width="196" height="152" rx="3" fill="#fff" />
+            <path d="M44 172h196M70 96v152M96 96v152M122 96v152M148 96v152M174 96v152M200 96v152M226 96v152" stroke-width="3" />
+            <rect x="240" y="96" width="196" height="152" rx="3" fill="#fff" />
+            <path d="M240 172h196M254 96v152M280 96v152M306 96v152M332 96v152M358 96v152M384 96v152M410 96v152" stroke-width="3" />
+          </g>
+          <rect x="22" y="70" width="22" height="192" rx="3" fill="#1a1a1a" />
+          <rect x="436" y="70" width="22" height="192" rx="3" fill="#1a1a1a" />
+          <rect x="18" y="62" width="30" height="12" rx="3" fill="#ff5000" />
+          <rect x="432" y="62" width="30" height="12" rx="3" fill="#ff5000" />
+          <circle cx="240" cy="172" r="11" fill="#ff5000" />
+          <circle cx="240" cy="172" r="4" fill="#fff" />
+        </svg>
+      </header>
+
+      <ul class="facts">
+        <li><b>2</b> rollen</li>
+        <li><b>4</b> talen met varianten</li>
+        <li><b>3</b> mediaformaten</li>
+        <li><b>5</b> demoposts</li>
+      </ul>
+
+      <div class="grid">
+        <section>
+          <h2><span>01</span> Tools en waarom</h2>
+          <p>
+            Ik bouwde met <strong>Claude Code</strong> (Sonnet 5.5), in een vaste werkwijze: eerst vragen, dan een plan dat ik goedkeurde, dan één feature per branch die ik zelf testte voor ik pushte. De app is <strong>Vue 3 en TypeScript</strong> op <strong>Vercel</strong>, met <strong>Supabase</strong> voor login, rolregels op de server en opslag. Gratis, snel online, en de rolcontrole zit niet in de frontend.
+          </p>
+        </section>
+
+        <section>
+          <h2><span>02</span> Wat AI voor mij deed</h2>
+          <p>
+            Code, migraties, tests, documentatie en onderzoek, plus keuzes met alternatieven. Ik koos de uitbreiding (<strong>talen en varianten</strong>), stuurde het ontwerp bij en testte alles. AI maakte ook fouten die ik of de tests ving, zoals een deellink naar een beschermde Vercel-URL waardoor LinkedIn de verkeerde preview toonde.
+          </p>
+        </section>
+
+        <section>
+          <h2><span>03</span> Onderzoek naar LinkedIn</h2>
+          <p>
+            Statistieken per post, lid en bedrijfspagina bestaan via de <strong>Community Management API</strong>, maar vragen een goedgekeurde app en toestemming van elk lid. Omdat de medewerker via de deeldialoog zelf post, weten we niet welke post bij welke campagne hoort. Cijfers per campagne vragen dat de app zelf post, of eigen klik-tracking. Bronnen: <strong>docs/linkedin-onderzoek.md</strong>.
+          </p>
+        </section>
+
+        <section>
+          <h2><span>04</span> Wat (nog) niet werkt</h2>
+          <ul>
+            <li>Op <strong>desktop</strong> krijgt LinkedIn enkel een link; tekst via het klembord, video en carrousel niet automatisch.</li>
+            <li>Getest op <strong>Android Chrome</strong>, niet op iPhone.</li>
+            <li>Posts bewerken kan niet; &ldquo;gedeeld&rdquo; betekent &ldquo;op delen geklikt&rdquo;.</li>
+            <li>Wit op het oranje haalt ±3,3 : 1 contrast, onder WCAG AA.</li>
+          </ul>
+        </section>
+
+        <section style="grid-column: 1 / -1">
+          <h2><span>05</span> Wat ik als volgende zou bouwen</h2>
+          <ul>
+            <li><strong>Klik-tracking</strong> op de publieke postpagina met een klein dashboard per campagne en medewerker.</li>
+            <li><strong>Posts bewerken</strong> en <strong>boostcampagnes</strong> (een knop naar de bedrijfspost).</li>
+            <li>De <strong>Development Tier</strong> van de LinkedIn-API aanvragen en proefdraaien.</li>
+          </ul>
+        </section>
+      </div>
+
+      <footer>
+        <span><b>Prototype</b> locinox-case.vercel.app</span>
+        <span><b>Code</b> github.com/nebitje/locinoxCase</span>
+        <span>Meer: docs/uitleg.md</span>
+      </footer>
+    </div>
+  </body>
+</html>
