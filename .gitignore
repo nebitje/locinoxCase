@@ -18,6 +18,9 @@ dist-ssr
 !.env.example
 .vercel
 
+# Gegenereerde wikipagina's (npm run wiki:build)
+.wiki-build
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

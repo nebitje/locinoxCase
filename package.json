@@ -14,7 +14,9 @@
     "test": "vitest run",
     "seed": "node --env-file=.env scripts/seed.ts",
     "seed:demo": "node --env-file=.env scripts/seed-demo.ts",
-    "pdf:uitleg": "node scripts/build-uitleg-pdf.ts"
+    "pdf:uitleg": "node scripts/build-uitleg-pdf.ts",
+    "wiki:build": "node scripts/sync-wiki.ts",
+    "wiki:sync": "node scripts/sync-wiki.ts --push"
   },
   "dependencies": {
     "@fontsource-variable/open-sans": "^5.3.0",
