@@ -94,7 +94,16 @@ De medewerker moet nergens iets downloaden. De bestanden worden op mobiel vooraf
 - **Donkere modus:** door mij ontworpen, want locinox.com heeft er geen. Hij volgt standaard de systeemvoorkeur en een knop in de balk laat de bezoeker kiezen; die keuze wordt onthouden. Een klein script in `index.html` zet het thema vóór het eerste scherm, zodat er geen lichte flits is.
 - **Lettertype:** Open Sans via het npm-pakket `@fontsource-variable/open-sans` (OFL-licentie, onderhouden, lokaal meegeleverd en dus geen verzoeken naar Google Fonts). Enkel de Latijnse tekensets (EN, FR, DE, NL) worden geladen, samen ongeveer 84 kB.
 - **Contrast (eerlijk):** witte tekst op `#FF5000` haalt ongeveer **3,3 : 1**, onder de 4,5 : 1 die WCAG AA voor gewone tekst vraagt. Locinox gebruikt zelf wit op oranje; ik behoud dat met een vetgedrukte, ruime knoptekst. Wie strikt aan AA wil voldoen, zet `--on-brand` op `#1a1a1a` (±6 : 1) of gebruikt een donkerder oranje; dat is één regel in `style.css`. Oranje als **tekst** op een lichte ondergrond gebruikt het donkerdere `#D94400` (±4,9 : 1).
-- **Niet gedaan:** een volledig ontwerpsysteem, animaties en een gebruikersinstelling "volg systeem" als aparte derde stand.
+- **Beweging en verfijning:** de basis is bewust rustig (Locinox-stijl), met daarbovenop een laag beweging die het product dient en niet afleidt:
+  - een loginscherm met een eigen illustratie van een vouwpoort die opent en sluit (verwijst naar het product van Locinox);
+  - pagina-overgangen (Vue `<Transition>`), kaarten die na elkaar binnenkomen (vertraging via een CSS-variabele per kaart), hover met lift en een langzame zoom van de foto, en glans over de primaire knop;
+  - laadskeletten met een glans in plaats van "Laden…", en een lege toestand met illustratie;
+  - een sticky balk met doorschijnend glas en een accentlijn die bij het laden uitgroeit;
+  - een thema-wissel met een cirkelvormige onthulling vanaf de knop (View Transitions API; waar die ontbreekt wisselt het thema gewoon direct);
+  - een carrousel met stippen op de detailpagina, en een detailpagina in twee kolommen op desktop met de media vast.
+- **Toegankelijkheid en prestaties:** alle beweging staat uit bij `prefers-reduced-motion`. Er zijn geen animatiebibliotheken gebruikt: enkel CSS, Vue en de browser. Animaties gebruiken enkel `transform` en `opacity`, die de browser op de GPU afhandelt.
+- **Styleguide:** `/styleguide` toont de tokens en bouwstenen op voorbeelddata, in licht en donker. Ze is publiek, bevat geen gebruikersgegevens en dient als levende documentatie voor ontwerpers en ontwikkelaars.
+- **Niet gedaan:** een volledig ontwerpsysteem met alle toestanden, een aparte derde thema-stand "volg systeem", en tests voor de visuele weergave (daarvoor zou een bibliotheek voor schermafbeeldingstests nodig zijn).
 
 ## Bewust niet gebouwd
 
