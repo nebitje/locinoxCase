@@ -4,6 +4,7 @@ import {
   fileNameFor,
   linkedInShareUrl,
   publicPostUrl,
+  resolvePublicOrigin,
 } from './share'
 
 describe('choosePrimaryMethod', () => {
@@ -18,6 +19,22 @@ describe('choosePrimaryMethod', () => {
   it('kiest op desktop altijd LinkedIn', () => {
     expect(choosePrimaryMethod({ canShareFiles: true, isMobile: false })).toBe('linkedin')
     expect(choosePrimaryMethod({ canShareFiles: false, isMobile: false })).toBe('linkedin')
+  })
+})
+
+describe('resolvePublicOrigin', () => {
+  const current = 'https://locinox-case-abc123-team.vercel.app'
+
+  it('gebruikt het ingestelde publieke adres, zonder pad', () => {
+    expect(resolvePublicOrigin('https://locinox-case.vercel.app/', current)).toBe('https://locinox-case.vercel.app')
+    expect(resolvePublicOrigin(' https://locinox-case.vercel.app/posts ', current)).toBe('https://locinox-case.vercel.app')
+  })
+
+  it('valt terug op het huidige adres zonder of met ongeldige instelling', () => {
+    expect(resolvePublicOrigin(undefined, current)).toBe(current)
+    expect(resolvePublicOrigin('', current)).toBe(current)
+    expect(resolvePublicOrigin('geen url', current)).toBe(current)
+    expect(resolvePublicOrigin('javascript:alert(1)', current)).toBe(current)
   })
 })
 

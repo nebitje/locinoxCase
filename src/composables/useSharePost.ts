@@ -6,6 +6,7 @@ import {
   isMobileDevice,
   linkedInShareUrl,
   publicPostUrl,
+  resolvePublicOrigin,
   type ShareMethod,
 } from '../lib/share'
 
@@ -96,7 +97,8 @@ export function useSharePost(campaign: Ref<Campaign | null>) {
   // Let op: geen `await` vóór window.open of navigator.share, anders gaat de klik als gebruikersactie verloren.
   function shareViaLinkedIn(current: Campaign) {
     const copied = writeText(current.copy)
-    window.open(linkedInShareUrl(publicPostUrl(window.location.origin, current.id)), '_blank', 'noopener')
+    const origin = resolvePublicOrigin(import.meta.env.VITE_PUBLIC_URL, window.location.origin)
+    window.open(linkedInShareUrl(publicPostUrl(origin, current.id)), '_blank', 'noopener')
     void copied.then((ok) => {
       status.value = { key: ok ? 'linkedinOpenedCopied' : 'linkedinOpenedNotCopied', tone: ok ? 'success' : 'error' }
     })

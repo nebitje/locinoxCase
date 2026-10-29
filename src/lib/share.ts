@@ -16,6 +16,22 @@ export function choosePrimaryMethod({ canShareFiles, isMobile }: ShareEnvironmen
   return isMobile && canShareFiles ? 'native' : 'linkedin'
 }
 
+/**
+ * Het adres waarmee gedeeld wordt. Een vast publiek adres (VITE_PUBLIC_URL) voorkomt dat de link naar een
+ * beschermde preview- of deployment-URL wijst, die LinkedIn niet kan ophalen. Zonder instelling of bij een
+ * ongeldige waarde gebruiken we het adres van de huidige pagina.
+ */
+export function resolvePublicOrigin(configured: string | undefined, currentOrigin: string): string {
+  const value = configured?.trim()
+  if (!value) return currentOrigin
+  try {
+    const url = new URL(value)
+    return url.protocol === 'https:' || url.protocol === 'http:' ? url.origin : currentOrigin
+  } catch {
+    return currentOrigin
+  }
+}
+
 /** De publieke pagina met Open Graph-tags waar LinkedIn de preview vandaan haalt. */
 export function publicPostUrl(origin: string, campaignId: string): string {
   return `${origin}/p/${campaignId}`
