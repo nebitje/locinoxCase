@@ -20,6 +20,12 @@ export const router = createRouter({
       meta: { roles: ['admin'] },
     },
     {
+      path: '/admin/posts/new',
+      name: 'admin-post-new',
+      component: () => import('../views/AdminPostNewView.vue'),
+      meta: { roles: ['admin'] },
+    },
+    {
       path: '/posts',
       name: 'employee-home',
       component: () => import('../views/EmployeeHomeView.vue'),
